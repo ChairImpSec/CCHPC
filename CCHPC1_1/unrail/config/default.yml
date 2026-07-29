@@ -1,0 +1,179 @@
+numshares: 2
+inline_modules:
+  XOR:
+    map_to: XOR2
+  XNOR:
+    map_to: XNOR2
+  AND:
+    map_to: AND2
+  NAND:
+    map_to: NAND2
+  OR:
+    map_to: OR2
+  NOR:
+    map_to: NOR2
+  NOT:
+    map_to: NOT
+
+modules:
+  XOR2:
+    type: linear
+    inputs:
+      - a
+      - b
+    outputs:
+      - z
+    cost:
+      single_rail: 3192 # 3.192
+      dual_rail: 5320 # 5.320
+    critical_path:
+      single_rail: 2
+      dual_rail: 4
+    verilog_output:
+      single_rail_module: linear_CCHPC1_1_SRtSR
+      dual_rail_module: linear_CCHPC1_1_DRtDR
+      config_bits:
+        - name: CONF
+          value: 1'b0
+  XNOR2:
+    type: linear
+    inputs:
+      - a
+      - b
+    outputs:
+      - z
+    cost:
+      single_rail: 3192 # 3.192
+      dual_rail: 5320 # 5.320
+    critical_path:
+      single_rail: 2
+      dual_rail: 4
+    verilog_output:
+      single_rail_module: linear_CCHPC1_1_SRtSR
+      dual_rail_module: linear_CCHPC1_1_DRtDR
+      config_bits:
+        - name: CONF
+          value: 1'b1
+  AND2:
+    type: non-linear
+    inputs:
+      - a
+      - b
+    outputs:
+      - z
+    clock_wire: clk
+    precharge_wire: prch
+    cost:
+      single_rail: 34048 # 34.048
+      dual_rail: 66766 # 66.766
+    critical_path:
+      single_rail: 4
+      dual_rail: 4
+    verilog_output:
+      single_rail_module: nonlinear_CCHPC1_1_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      config_bits:
+        - name: CONF
+          value: 2'h0
+      random_bits:
+        name: r
+        count: 1
+  NAND2:
+    type: non-linear
+    inputs:
+      - a
+      - b
+    outputs:
+      - z
+    clock_wire: clk
+    precharge_wire: prch
+    cost:
+      single_rail: 34048 # 34.048
+      dual_rail: 66766 # 66.766
+    critical_path:
+      single_rail: 4
+      dual_rail: 4
+    verilog_output:
+      single_rail_module: nonlinear_CCHPC1_1_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      config_bits:
+        - name: CONF
+          value: 2'h1
+      random_bits:
+        name: r
+        count: 1
+  OR2:
+    type: non-linear
+    inputs:
+      - a
+      - b
+    outputs:
+      - z
+    clock_wire: clk
+    precharge_wire: prch
+    cost:
+      single_rail: 34048 # 34.048
+      dual_rail: 66766 # 66.766
+    critical_path:
+      single_rail: 4
+      dual_rail: 4
+    verilog_output:
+      single_rail_module: nonlinear_CCHPC1_1_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      config_bits:
+        - name: CONF
+          value: 2'h3
+      random_bits:
+        name: r
+        count: 1
+  NOR2:
+    type: non-linear
+    inputs:
+      - a
+      - b
+    outputs:
+      - z
+    clock_wire: clk
+    precharge_wire: prch
+    cost:
+      single_rail: 34048 # 34.048
+      dual_rail: 66766 # 66.766
+    critical_path:
+      single_rail: 4
+      dual_rail: 4
+    verilog_output:
+      single_rail_module: nonlinear_CCHPC1_1_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      config_bits:
+        - name: CONF
+          value: 2'h2
+      random_bits:
+        name: r
+        count: 1
+  NOT:
+    type: inversion
+    inputs:
+      - a
+    outputs:
+      - z
+    cost:
+      single_rail: 532 # 0.532
+      dual_rail: 0
+    critical_path:
+      single_rail: 1
+      dual_rail: 0
+    verilog_output:
+      single_rail_module: NOT_CCHPC1_1_SRtSR
+      dual_rail_module: NOT_CCHPC1_1_DRtDR
+
+register:
+  input: a
+  output: z
+  clock_wire: clk
+  precharge_wire: prch
+  cost:
+    single_rail: 4522 # 4.522
+    dual_rail: 15694 # 15.694
+  verilog_output:
+    single_rail_module: REG_SRtSR
+    dual_rail_module: REG_SRtDR

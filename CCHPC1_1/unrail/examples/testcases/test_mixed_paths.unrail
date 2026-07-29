@@ -1,0 +1,11 @@
+# Test: output gadget fed by a non-linear path and a purely linear path from inputs
+input a data
+input b data
+input c data
+input clk clock
+input prch precharge
+input r randomness
+output o1 data
+
+t1 = a & b
+o1 = t1 ^ c

@@ -1,0 +1,165 @@
+# Sbox from:
+# https://inria.hal.science/hal-01518214v1/preview/978-3-642-30436-1_24_Chapter.pdf#page=2
+# 
+# GF(2^4) inverter replaced by:
+# https://tches.iacr.org/index.php/TCHES/article/view/11942/11802
+# 
+# #gates:     127
+# depth (NL):   ? (5)
+# #L:	     94
+# #NL:         33
+
+input U0 data
+input U1 data
+input U2 data
+input U3 data
+input U4 data
+input U5 data
+input U6 data
+input U7 data
+input clk clock
+input prch precharge
+input r randomness
+output S0 data
+output S1 data
+output S2 data
+output S3 data
+output S4 data
+output S5 data
+output S6 data
+output S7 data
+
+T1 = U0 ^ U3
+T2 = U0 ^ U5
+T3 = U0 ^ U6
+T4 = U3 ^ U5
+T5 = U4 ^ U6
+T6 = T1 ^ T5
+T7 = U1 ^ U2
+T8 = U7 ^ T6
+T9 = U7 ^ T7
+T10 = T6 ^ T7
+T11 = U1 ^ U5
+T12 = U2 ^ U5
+T13 = T3 ^ T4
+T14 = T6 ^ T11
+T15 = T5 ^ T11
+T16 = T5 ^ T12
+T17 = T9 ^ T16
+T18 = U3 ^ U7
+T19 = T7 ^ T18
+T20 = T1 ^ T19
+T21 = U6 ^ U7
+T22 = T7 ^ T21
+T23 = T2 ^ T22
+T24 = T2 ^ T10
+T25 = T20 ^ T17
+T26 = T3 ^ T16
+T27 = T1 ^ T12
+
+M1 = T13 & T6
+M2 = T23 & T8
+M3 = T14 ^ M1
+M4 = T19 & U7
+M5 = M4 ^ M1
+M6 = T3 & T16
+M7 = T22 & T9
+M8 = T26 ^ M6
+M9 = T20 & T17
+M10 = M9 ^ M6
+M11 = T1 & T15
+M12 = T4 & T27
+M13 = M12 ^ M11
+M14 = T2 & T10
+M15 = M14 ^ M11
+M16 = M3 ^ M2
+M17 = M5 ^ T24
+M18 = M8 ^ M7
+M19 = M10 ^ M15
+M20 = M16 ^ M13
+M21 = M17 ^ M15
+M22 = M18 ^ M13
+M23 = M19 ^ T25
+
+
+inv_a0 = M22 ^ M23
+inv_a1 = M20 ^ M21
+inv_c0 = inv_a0 ^ inv_b0
+inv_c1 = inv_a1 ^ inv_b0
+inv_d0 = M23 ^ inv_b1
+inv_d1 = M21 ^ inv_b1
+inv_l3 = inv_a0 ^ inv_e1
+inv_l2 = M23 ^ inv_f1
+inv_l1 = inv_a1 ^ inv_e0
+inv_l0 = M21 ^ inv_f0
+
+inv_b0 = M21 & M23
+inv_b1 = M20 & M22
+inv_e0 = M20 & inv_c0
+inv_e1 = M22 & inv_c1
+inv_f0 = inv_a1 & inv_d0
+inv_f1 = inv_a0 & inv_d1
+
+
+M41 = inv_l1 ^ inv_l3
+M42 = inv_l0 ^ inv_l2
+M43 = inv_l0 ^ inv_l1
+M44 = inv_l2 ^ inv_l3
+M45 = M42 ^ M41
+M46 = M44 & T6
+M47 = inv_l3 & T8
+M48 = inv_l2 & U7
+M49 = M43 & T16
+M50 = inv_l1 & T9
+M51 = inv_l0 & T17
+M52 = M42 & T15
+M53 = M45 & T27
+M54 = M41 & T10
+M55 = M44 & T13
+M56 = inv_l3 & T23
+M57 = inv_l2 & T19
+M58 = M43 & T3
+M59 = inv_l1 & T22
+M60 = inv_l0 & T20
+M61 = M42 & T1
+M62 = M45 & T4
+M63 = M41 & T2
+
+L0 = M61 ^ M62
+L1 = M50 ^ M56
+L2 = M46 ^ M48
+L3 = M47 ^ M55
+L4 = M54 ^ M58
+L5 = M49 ^ M61
+L6 = M62 ^ L5
+L7 = M46 ^ L3
+L8 = M51 ^ M59
+L9 = M52 ^ M53
+L10 = M53 ^ L4
+L11 = M60 ^ L2
+L12 = M48 ^ M51
+L13 = M50 ^ L0
+L14 = M52 ^ M61
+L15 = M55 ^ L1
+L16 = M56 ^ L0
+L17 = M57 ^ L1
+L18 = M58 ^ L8
+L19 = M63 ^ L4
+L20 = L0 ^ L1
+L21 = L1 ^ L7
+L22 = L3 ^ L12
+L23 = L18 ^ L2
+L24 = L15 ^ L9
+L25 = L6 ^ L10
+L26 = L7 ^ L9
+L27 = L8 ^ L10
+L28 = L11 ^ L14
+L29 = L11 ^ L17
+S0 = L6 ^ L24
+S1 = L16 ~^ L26
+S2 = L19 ~^ L28
+S3 = L6 ^ L21
+S4 = L20 ^ L22
+S5 = L25 ^ L29
+S6 = L13 ~^ L27
+S7 = L6 ~^ L23

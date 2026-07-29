@@ -1,0 +1,13 @@
+# Test: circuit without any non-linear gadgets (single-rail registers only)
+input a data
+input b data
+input c data
+input clk clock
+input prch precharge
+input r randomness
+output o1 data
+output o2 data
+
+t1 = a ^ b
+o1 = t1 ^ c
+o2 = t1 ~^ b

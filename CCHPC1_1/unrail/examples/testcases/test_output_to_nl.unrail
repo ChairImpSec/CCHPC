@@ -1,0 +1,13 @@
+# Test: output wire that also feeds a non-linear gadget (blocked output port)
+input a data
+input b data
+input c data
+input clk clock
+input prch precharge
+input r randomness
+output o1 data
+output o2 data
+
+o1 = a ^ b
+t1 = o1 & c
+o2 = t1 ^ b

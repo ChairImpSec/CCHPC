@@ -1,0 +1,178 @@
+# I/O config
+input A7 data
+input A6 data
+input A5 data
+input A4 data
+input A3 data
+input A2 data
+input A1 data
+input A0 data
+input clk clock
+input prch precharge
+input r randomness
+output Q7 data
+output Q6 data
+output Q5 data
+output Q4 data
+output Q3 data
+output Q2 data
+output Q1 data
+output Q0 data
+
+# Algorithm
+D3 = T5 ~^ _9_
+T9 = C6 ~^ _5_
+_10_ = ~ Z0
+_11_ = ~ Z4
+_12_ = Z6 ~^ Z4
+inv_qmul_b0 = ~ _12_
+_13_ = Z2 ~^ Z0
+inv_pmul_b0 = ~ _13_
+_14_ = inv_qmul_b0 & inv_pmul_b0
+inv_qmul_b1 = Z7 ^ Z5
+_15_ = ~ inv_qmul_b1
+inv_aa = _12_ ~^ inv_qmul_b1
+inv_pmul_b1 = Z3 ^ Z1
+_16_ = ~ inv_pmul_b1
+inv_bb = _13_ ~^ inv_pmul_b1
+_17_ = inv_aa & inv_bb
+_18_ = Z1 ~& Z5
+_19_ = Z1 ~^ Z0
+inv_bl = ~ _19_
+_20_ = Z5 ~^ Z4
+inv_al = ~ _20_
+_21_ = _19_ & _20_
+_22_ = _18_ ~^ _21_
+_23_ = _17_ ^ _22_
+inv_c1 = _14_ ~^ _23_
+_24_ = _15_ & _16_
+inv_ah = Z7 ^ Z6
+inv_bh = Z3 ^ Z2
+_25_ = inv_ah & inv_bh
+_26_ = _24_ ~^ _25_
+_27_ = Z2 & Z6
+_28_ = _10_ & _11_
+_29_ = _10_ ~& _11_
+_30_ = _14_ ~^ _27_
+inv_c2 = _26_ ~^ _30_
+_31_ = Z3 & Z7
+_32_ = _12_ & _13_
+_33_ = _31_ ~^ _32_
+_34_ = _17_ ~^ _25_
+inv_c3 = _33_ ~^ _34_
+inv_pmul_a0 = inv_dinv_pmul_q ^ inv_dinv_qmul_q
+inv_pmul_a1 = inv_dinv_pmul_p ^ inv_dinv_qmul_p
+inv_dd = inv_pmul_a0 ^ inv_pmul_a1
+inv_dh = inv_dinv_pmul_p ^ inv_dinv_pmul_q
+inv_dl = inv_dinv_qmul_p ^ inv_dinv_qmul_q
+_35_ = inv_qmul_b1 & inv_pmul_b1
+_36_ = _14_ ~^ _35_
+_37_ = inv_bl & inv_al
+_38_ = _29_ ~& _37_
+_39_ = _18_ ~& _28_
+_40_ = _38_ & _39_
+inv_c0 = _36_ ~^ _40_
+_41_ = ~ inv_c1
+_42_ = ~ inv_c3
+inv_dinv_pmul_cd = inv_c1 ^ inv_c0
+_43_ = ~ inv_dinv_pmul_cd
+_44_ = _41_ & _42_
+_45_ = _41_ ~& _42_
+inv_dinv_qmul_cd = inv_c3 ^ inv_c2
+_46_ = ~ inv_dinv_qmul_cd
+_47_ = inv_dinv_pmul_cd & inv_dinv_qmul_cd
+_48_ = _45_ ~& _47_
+_49_ = inv_c0 ~& inv_c2
+_50_ = _44_ ~& _49_
+inv_dinv_c1 = _48_ & _50_
+inv_dinv_pmul_ab = inv_dinv_c0 ^ inv_dinv_c1
+_51_ = _43_ ~& _46_
+inv_dinv_c0 = _49_ ~^ _51_
+_54_ = inv_dinv_pmul_ab ~& inv_dinv_pmul_cd
+_52_ = inv_dinv_c1 & inv_c0
+inv_dinv_pmul_q = _54_ ~^ _52_
+_53_ = inv_dinv_c0 & inv_c1
+inv_dinv_pmul_p = _54_ ~^ _53_
+_57_ = inv_dinv_pmul_ab ~& inv_dinv_qmul_cd
+_55_ = inv_dinv_c1 & inv_c2
+inv_dinv_qmul_q = _57_ ~^ _55_
+_56_ = inv_dinv_c0 & inv_c3
+inv_dinv_qmul_p = _57_ ~^ _56_
+C6 = inv_pmul_himul_q ^ inv_pmul_summul_q
+C5 = inv_pmul_summul_p ^ inv_pmul_lomul_p
+C4 = inv_pmul_summul_q ^ inv_pmul_lomul_q
+C7 = inv_pmul_himul_p ^ inv_pmul_summul_p
+_60_ = inv_dh ~& inv_bh
+_58_ = inv_dinv_pmul_q & Z2
+inv_pmul_himul_q = _60_ ~^ _58_
+_59_ = inv_dinv_pmul_p & Z3
+inv_pmul_himul_p = _60_ ~^ _59_
+_63_ = inv_dl ~& inv_bl
+_61_ = inv_dinv_qmul_q & Z0
+inv_pmul_lomul_q = _63_ ~^ _61_
+_62_ = inv_dinv_qmul_p & Z1
+inv_pmul_lomul_p = _63_ ~^ _62_
+_66_ = inv_pmul_a0 ~& inv_pmul_b0
+_64_ = inv_pmul_a1 & inv_pmul_b1
+inv_pmul_summul_q = _66_ ~^ _64_
+_65_ = inv_dd & inv_bb
+inv_pmul_summul_p = _66_ ~^ _65_
+C2 = inv_qmul_himul_q ^ inv_qmul_summul_q
+C1 = inv_qmul_summul_p ^ inv_qmul_lomul_p
+C0 = inv_qmul_summul_q ^ inv_qmul_lomul_q
+C3 = inv_qmul_himul_p ^ inv_qmul_summul_p
+_69_ = inv_dh ~& inv_ah
+_67_ = inv_dinv_pmul_q & Z6
+inv_qmul_himul_q = _69_ ~^ _67_
+_68_ = inv_dinv_pmul_p & Z7
+inv_qmul_himul_p = _69_ ~^ _68_
+_72_ = inv_dl ~& inv_al
+_70_ = inv_dinv_qmul_q & Z4
+inv_qmul_lomul_q = _72_ ~^ _70_
+_71_ = inv_dinv_qmul_p & Z5
+inv_qmul_lomul_p = _72_ ~^ _71_
+_75_ = inv_pmul_a0 ~& inv_qmul_b0
+_73_ = inv_pmul_a1 & inv_qmul_b1
+inv_qmul_summul_q = _75_ ~^ _73_
+_74_ = inv_dd & inv_aa
+inv_qmul_summul_p = _75_ ~^ _74_
+Z7 = ~ B7
+Z6 = ~ R5
+Z5 = ~ B5
+Z4 = ~ B4
+Z3 = ~ B3
+Z2 = ~ B2
+Z1 = ~ R4
+Z0 = ~ B0
+Q7 = ~ T4
+Q6 = ~ T1
+Q5 = ~ T3
+Q4 = ~ T5
+Q3 = ~ D3
+Q2 = ~ D2
+Q1 = ~ T7
+Q0 = ~ T9
+B2 = ~ A0
+_0_ = C3 ^ C5
+T4 = ~ _0_
+T3 = C6 ^ C0
+T1 = C7 ^ C3
+_1_ = A1 ~^ A3
+_2_ = A0 ~^ _1_
+_3_ = A4 ^ A7
+B3 = _2_ ~^ _3_
+_4_ = A0 ^ A6
+R4 = A5 ~^ _4_
+B5 = A1 ^ R4
+R5 = A4 ^ R4
+_5_ = C4 ~^ C1
+T7 = C5 ~^ _5_
+T5 = C7 ~^ _0_
+_6_ = A1 ^ A2
+_7_ = A3 ^ _6_
+B0 = _4_ ~^ _7_
+B4 = A7 ^ R4
+B7 = _6_ ^ B4
+_8_ = C2 ^ _0_
+D2 = T3 ~^ _8_
+_9_ = C6 ~^ C4

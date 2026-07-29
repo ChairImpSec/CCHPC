@@ -1,0 +1,17 @@
+[workspace]
+authors = ["Lukas | AstroGD <lukas@astrogd.eu>"]
+channels = ["conda-forge"]
+name = "unrail"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+graphviz = ">=13.1.2,<14"
+pyyaml = ">=6.0.3,<7"
+jsonschema = ">=4.25.1,<5"
+python-graphviz = ">=0.21,<0.22"
+graph-tool = ">=2.98,<3"
+pypdf = ">=6.4.0,<7"
+python = ">=3.12.12,<3.13"
