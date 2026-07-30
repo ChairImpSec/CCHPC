@@ -202,6 +202,22 @@ The included pdf files visualize the circuit at different stages of the program.
 
 Depending on the cli flags, some files are missing when the step where they generate is disabled.
 
+The graphs follow the following color notation:
+
+| Graph Element            | Description                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------- |
+| Blue background pill     | Register                                                                        |
+| White background pill    | Linear gadget / Linear inversion                                                |
+| Red background pill      | Non-linear gadget                                                               |
+| Yellow background pill   | Dual-rails to single-rail mapper                                                |
+| ---                      | ---                                                                             |
+| Green border pill        | Optimized gadget (DRtSR for non-linear, SRtSR for linear, SRtSR for register)   |
+| Black border pill        | Unoptimized gadget (DRtDR for non-linear, SRtSR for linear, SRtDR for register) |
+| ---                      | ---                                                                             |
+| Red edge                 | Edge connects to non-linear gadget                                              |
+| Blue edge                | Edge connects to register                                                       |
+| Yellow edge              | Edge connects to mapper gadget                                                  |
+
 ### Regenerating results
 
 To regenerate the results with $\mathsf{Unrail}$, you can execute the provided `regenerate_results.sh` script in the provided pixi shell environment.
