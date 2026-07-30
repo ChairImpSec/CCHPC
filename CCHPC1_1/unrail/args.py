@@ -1,4 +1,5 @@
 import argparse;
+from version import get_version;
 
 _args: argparse.Namespace | None = None;
 
@@ -8,8 +9,8 @@ def get_args() -> argparse.Namespace:
     return _args;
 
   parser = argparse.ArgumentParser(
-    description="An optimization framework to reduce area for CCHPC based dual rail secured hardware designs",
-    epilog="For more information, please visit the git repository at https://git.astrogd.cloud/impSec/unrail",
+    description="An optimization framework to reduce area of masked implementations with composable gadgets of constant cycle schemes",
+    epilog="Version " + get_version() + ". For more information, please visit the git repository at https://github.com/ChairImpSec/CCHPC",
   );
 
   # Required args
@@ -25,4 +26,3 @@ def get_args() -> argparse.Namespace:
 
   _args = parser.parse_args();
   return _args;
-

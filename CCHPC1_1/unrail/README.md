@@ -174,7 +174,7 @@ Supported operands are:
 
 ## Examples
 
-You can find example S-box designs in the `/examples` folder. Results from our runs that are included in our paper (c.f. Section 6, Table 5 ) are included in `/results`.
+You can find example S-box designs in the `/examples` folder. Results from our runs that are included in our paper (c.f. Section 6.1, Table 5 ) are included in `/results`.
 
 ## S-box Testbench
 
