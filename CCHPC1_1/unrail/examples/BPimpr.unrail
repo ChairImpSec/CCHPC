@@ -1,12 +1,12 @@
-# Sbox from:
+# taken from:
 # https://inria.hal.science/hal-01518214v1/preview/978-3-642-30436-1_24_Chapter.pdf#page=2
 # 
 # GF(2^4) inverter replaced by:
 # https://tches.iacr.org/index.php/TCHES/article/view/11942/11802
 # 
 # #gates:     127
-# depth (NL):   ? (5)
-# #L:	     94
+# depth (NL):  17 (4)
+# #L:          94
 # #NL:         33
 
 input U0 data

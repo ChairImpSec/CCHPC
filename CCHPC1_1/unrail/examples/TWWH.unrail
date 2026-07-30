@@ -1,10 +1,10 @@
 # taken from:
 # https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8650149
 # 
-# #gates:      112
-# depth (NL):   25 (?)
-# #L:           80
-# #NL:          32
+# #gates:     112
+# depth (NL):  25 (5)
+# #L:          80
+# #NL:         32
 
 input x7 data
 input x6 data

@@ -1,9 +1,14 @@
 # taken from:
 # https://eprint.iacr.org/2024/1996.pdf
 # Listing 11
-# (D: 24, AD: 5, #NL: 32, #L: 81, #(gate): 113)
+# 
 # Python implementation:
 # https://github.com/lemontrr/Extended-BP-Framework/blob/main/code_results/AES10v2_BPD_24D_5AD_32NLs_81XORs.py
+# 
+# #gates:     113
+# depth (NL):  24 (5)
+# #L:          81
+# #NL:         32
 
 input x7 data
 input x6 data

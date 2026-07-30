@@ -1,3 +1,13 @@
+# taken from:
+# https://github.com/coruus/canright-aes-sboxes/blob/master/verilog/sbox.verilog
+# 
+# Converted using yosys and then manually converted to unrail syntax
+# 
+# #gates:      126
+# depth (NL):   24 (8)
+# #L:           78
+# #NL:          48
+
 # I/O config
 input A7 data
 input A6 data
