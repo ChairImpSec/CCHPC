@@ -1,0 +1,134 @@
+{
+    "performance": {
+      "max_number_of_threads": "half",
+      "minimize_probing_sets": "trivial",
+      "number_of_entries_in_report": 3,
+      "compact_distributions": true
+    },
+    "simulation": {
+      "groups": [
+        "5'b$$$$$",
+        "5'b$$$11"
+      ],
+     "output_shares": [
+        "{z[0]}",
+        "{z[1]}",
+        "{z[3]}"
+      ],
+      "expected_output": [
+        "1'b$",
+        "1'b1"
+      ],
+      "number_of_clock_cycles": 4,
+      "input_sequence": [
+        {
+          "signals": [
+            {
+                "name": "prch[1:0]",
+                "value": "2'b11"
+            },
+            {
+                "name": "{a[0],b[0]}",
+                "value": "2'b00"
+            },
+            {
+                "name": "{a[1],b[1]}",
+                "value": "2'b00"
+            },
+            {
+                "name": "{a[2],b[2]}",
+                "value": "2'b00"
+            },
+            {
+                "name": "{a[3],b[3]}",
+                "value": "2'b00"
+            },
+            {
+                "name": "{a[4],b[4]}",
+                "value": "2'b00"
+            },
+            {
+                "name": "{r[5:0]}",
+                "value": "6'b000000"
+            }
+          ]
+        },
+        {
+          "signals": [
+            {
+                "name": "prch[1:0]",
+                "value": "2'b10"
+            },
+            {
+                "name": "{a[0],b[0]}",
+                "value": "group_in0[1:0]"
+            },
+            {
+                "name": "{r[0]}",
+                "value": "group_in0[2]"
+            },
+            {
+                "name": "{r[1]}",
+                "value": "~group_in0[2]"
+            },
+            {
+                "name": "{r[2]}",
+                "value": "group_in0[3]"
+            },
+            {
+                "name": "{r[3]}",
+                "value": "~group_in0[3]"
+            }
+          ]
+        },
+        {
+          "signals": [
+            {
+                "name": "prch[1:0]",
+                "value": "2'b00"
+            },
+            {
+                "name": "{a[1],b[1]}",
+                "value": "group_in1[1:0]"
+            },
+            {
+                "name": "{a[2],b[2]}",
+                "value": "~group_in1[1:0]"
+            },
+            {
+                "name": "{r[4]}",
+                "value": "group_in0[4]"
+            },
+            {
+                "name": "{r[5]}",
+                "value": "~group_in0[4]"
+            }
+          ]
+        },
+        {
+          "signals": [
+            {
+                "name": "{a[3],b[3]}",
+                "value": "group_in2[1:0]"
+            },
+            {
+                "name": "{a[4],b[4]}",
+                "value": "~group_in2[1:0]"
+            }
+          ]
+        }
+      ],
+      "number_of_simulations": 100000000,
+      "number_of_simulations_per_step": 1000000,
+      "waveform_simulation": false,
+      "number_of_simulations_per_write": 100000000
+    },
+    "hardware": {
+      "clock_signal_name": "clk"
+    },
+    "side_channel_analysis": {
+      "order": 2,
+      "relaxed_model": true,
+      "transitional_leakage": true
+    }
+  }
