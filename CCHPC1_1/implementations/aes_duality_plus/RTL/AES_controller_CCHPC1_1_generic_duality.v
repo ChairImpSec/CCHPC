@@ -1,4 +1,4 @@
-module Controller #( parameter security_order = 1) (clk, rst, prch0, prch1, sel, MCsel, Rcon, done_layer0);
+module AES_controller_CCHPC1_1_generic_duality #( parameter security_order = 1) (clk, rst, prch0, prch1, sel, MCsel, Rcon, done_layer0);
 
     input                       clk;
     input                       rst;
@@ -63,11 +63,11 @@ module Controller #( parameter security_order = 1) (clk, rst, prch0, prch1, sel,
     end
 
     assign shifted      = {shifted_reg[6:0], 1'b0};
-	assign shiftedXORed = shifted ^ 8'h1B;
+		assign shiftedXORed = shifted ^ 8'h1B;
     assign Rcon         = shifted_reg;
-
 
     // done
     assign done_layer0 = MCsel[0];
 
 endmodule
+

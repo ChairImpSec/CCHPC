@@ -1,4 +1,4 @@
-module linear_CCHPC1_1_SRtSR #( parameter security_order = 1, CONF = 1'b0, INV = 1'b0
+module linear_CCHPC1_1_generic_SRtSR #( parameter security_order = 1, CONF = 1'b0, INV = 1'b0
                                                             // 1'b0: xor
                                                             // 1'b1: xnor
 )(
@@ -6,7 +6,7 @@ module linear_CCHPC1_1_SRtSR #( parameter security_order = 1, CONF = 1'b0, INV =
 );
     parameter integer d = security_order+1;
 
-    input  [d-1:0] a;       // share format: {..., a[2], a[1], a[0]} = {..., a^1_f, a^1_t, a^0}, ^ indicates share index, _ indicates rail
+    input  [d-1:0] a;       // share format: {..., a[2], a[1], a[0]} = {..., a^1, a^0}, ^ indicates share index
     input  [d-1:0] b;       //
     output [d-1:0] z;       //
     
@@ -24,7 +24,7 @@ module linear_CCHPC1_1_SRtSR #( parameter security_order = 1, CONF = 1'b0, INV =
     endgenerate
 
     //-----------------------------------------
-    //-- consecutive layers (dual-rail) -------
+    //-- consecutive layers (single-rail) -----
     //-----------------------------------------
 
     genvar i;
@@ -37,3 +37,4 @@ module linear_CCHPC1_1_SRtSR #( parameter security_order = 1, CONF = 1'b0, INV =
 
 
 endmodule
+

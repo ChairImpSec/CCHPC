@@ -1,4 +1,4 @@
-module REG_SRtSR #( parameter security_order = 1, INV = 1'b0
+module reg_SRtSR_generic #( parameter security_order = 1, INV = 1'b0
 )(
     clk, prch, a, z
 );
