@@ -1,0 +1,262 @@
+# taken from:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/sbox/aes-sbox-fwd-a47-ad3-g225-gd15-xx178-4.circ.txt
+# NIST AES circuit index:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/README.md
+# NIST Circuit Complexity repository circuit; the NIST source file does not identify a separate originating paper.
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=47, DR=31, DR2SR_B2F=16
+# L:  total=178, DR=129, SR_F2B=0, SR_B2F=49
+# REG=8
+#
+# #gates:     225
+# depth (NL):  15 (3)
+# #L:          178
+# #NL:         47
+input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
+input clk clock
+input prch precharge
+input r randomness
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
+
+t1 = x3 ^ x6
+t2 = x2 ^ x4
+t3 = x0 ^ x7
+t4 = x1 ^ x5
+t5 = x4 ^ x5
+t6 = x2 ^ x5
+t7 = x6 ^ x7
+t8 = x0 ^ x2
+t9 = x1 ^ x2
+t10 = t2 ^ t3
+t11 = t1 ^ t4
+t12 = x0 ^ t5
+t13 = x4 ^ t1
+t14 = x0 ^ t1
+t15 = x4 ^ t3
+t16 = x0 ^ t6
+t17 = t1 ^ t2
+t18 = t1 ^ t6
+t19 = x4 ^ t7
+t20 = x2 ^ t7
+t21 = t2 ^ t4
+t22 = t1 ^ t5
+t23 = t1 ^ t3
+t24 = x3 ^ t9
+t25 = x6 ^ t8
+t26 = t1 ^ t9
+t27 = t2 ^ t14
+t28 = t12 ^ t20
+t29 = t11 ^ t15
+t30 = x2 ^ t11
+t31 = t10 ^ t11
+t32 = t20 ^ t22
+t33 = x2 ^ t12
+t34 = x1 ^ t12
+t35 = x1 ^ t14
+t36 = x2 & t12
+t37 = t17 & t18
+t38 = t10 & t19
+t39 = t21 & t22
+t40 = t37 ^ t39
+t41 = x6 ^ t38
+t42 = x4 ^ t37
+t43 = x1 ^ t39
+t44 = x3 ^ t34
+t45 = t36 ^ t8
+t46 = x6 ^ t33
+t47 = t36 ^ t37
+t48 = t13 & t27
+t49 = t28 & t29
+t50 = t30 & t16
+t51 = t31 & t20
+t52 = t23 & t32
+t53 = t36 ^ t50
+t54 = x3 ^ t48
+t55 = t51 ^ t52
+t56 = t40 ^ t41
+t57 = t49 ^ t5
+t58 = t48 ^ t38
+t59 = t50 ^ t51
+t60 = t51 ^ t34
+t61 = t42 ^ t11
+t62 = t49 ^ t43
+t63 = t49 ^ t33
+t64 = t39 ^ t41
+t65 = t52 ^ t45
+t66 = t50 ^ t21
+t67 = t52 ^ t47
+t68 = x0 ^ t53
+t69 = t40 ^ t54
+t70 = t56 ^ t57
+t71 = t36 ^ t60
+t72 = x2 ^ t55
+t73 = t54 ^ t62
+t74 = t58 ^ t61
+t75 = t59 ^ t64
+t76 = t64 ^ t65
+t77 = t52 ^ t66
+t78 = t63 ^ t67
+t79 = t68 ^ t74
+t80 = t69 ^ t71
+t81 = t75 ^ t78
+t82 = t68 ^ t73
+t83 = t72 ^ t74
+t84 = t70 ^ t75
+t85 = t72 ^ t73
+t86 = t68 ^ t72
+t87 = t69 ^ t77
+t88 = t33 & t70
+t89 = t12 & t70
+t90 = t35 & t76
+t91 = t16 & t76
+t92 = t88 ^ t90
+t93 = t89 ^ t91
+t94 = t24 & t79
+t95 = t28 & t79
+t96 = t70 & t80
+t97 = t81 & t75
+t98 = t8 & t81
+t99 = t82 & t44
+t100 = t27 & t81
+t101 = t82 & t20
+t102 = t79 & t83
+t103 = t84 & t85
+t104 = t86 & t5
+t105 = t86 & t18
+t106 = t25 & t87
+t107 = t84 & t26
+t108 = t19 & t87
+t109 = t84 & t22
+t110 = t80 & t46
+t111 = t80 & t32
+t112 = t97 ^ t103
+t113 = t89 ^ t109
+t114 = t96 ^ t103
+t115 = t104 ^ t106
+t116 = t94 ^ t107
+t117 = t95 ^ t91
+t118 = t101 ^ t105
+t119 = t94 ^ t90
+t120 = t99 ^ t104
+t121 = t96 ^ t75
+t122 = t98 ^ t92
+t123 = t97 ^ t84
+t124 = t102 ^ t80
+t125 = t95 ^ t105
+t126 = t108 ^ t109
+t127 = t102 ^ t70
+t128 = t100 ^ t93
+t129 = t105 ^ t108
+t130 = t99 ^ t92
+t131 = t97 ^ t78
+t132 = t108 ^ t111
+t133 = t88 ^ t106
+t134 = t107 ^ t110
+t135 = t102 ^ t85
+t136 = t101 ^ t93
+t137 = t94 ^ t98
+t138 = t95 ^ t101
+t139 = t119 ^ t120
+t140 = t112 ^ t121
+t141 = t117 ^ t118
+t142 = t116 ^ t122
+t143 = t102 ^ t123
+t144 = t115 ^ t116
+t145 = t103 ^ t124
+t146 = t100 ^ t113
+t147 = t125 ^ t126
+t148 = t112 ^ t82
+t149 = t115 ^ t122
+t150 = t114 ^ t127
+t151 = t128 ^ t129
+t152 = t114 ^ t81
+t153 = t133 ^ t134
+t154 = t112 ^ t135
+t155 = t110 ^ t130
+t156 = t113 ^ t132
+t157 = t111 ^ t136
+t158 = t110 ^ t137
+t159 = t100 ^ t132
+t160 = t117 ^ t146
+t161 = t139 ^ t142
+t162 = t118 ^ t146
+t163 = t139 ^ t153
+t164 = t141 ^ t156
+t165 = t99 ^ t158
+t166 = t138 ^ t159
+t167 = t139 & t140
+t168 = t141 & t140
+t169 = t142 & t143
+t170 = t144 & t145
+t171 = t147 & t145
+t172 = t148 & t149
+t173 = t148 & t151
+t174 = t152 & t153
+t175 = t154 & t155
+t176 = t152 & t156
+t177 = t154 & t157
+t178 = t169 ^ t177
+t179 = t170 ^ t173
+t180 = t167 ^ t176
+t181 = t106 ^ t165
+t182 = t171 ^ t172
+t183 = t174 ^ t175
+t184 = t168 ^ t166
+t185 = t169 ^ t172
+t186 = t174 ^ t166
+t187 = t168 ^ t170
+t188 = t172 ^ t166
+t189 = t175 ^ t176
+t190 = t171 ^ t166
+t191 = t168 ^ t172
+t192 = t160 & t143
+t193 = t150 & t161
+t194 = t150 & t162
+t195 = t163 & t131
+t196 = t164 & t131
+t197 = t194 ^ t195
+t198 = t196 ^ t180
+t199 = t193 ^ t178
+t200 = t179 ^ t181
+t201 = t182 ^ t183
+t202 = t170 ^ t181
+t203 = t184 ^ t185
+t204 = t179 ^ t186
+t205 = t175 ^ t178
+t206 = t181 ^ t188
+t207 = t192 ^ t189
+t208 = t179 ^ t180
+t209 = t192 ^ t190
+t210 = t197 ^ t198
+t211 = t194 ^ t199
+t212 = t200 ^ t201
+s1 = t193 ~^ t202
+t213 = t200 ^ t203
+s3 = t199 ^ t204
+t214 = t187 ^ t205
+s5 = t206 ^ t207
+t215 = t197 ^ t205
+t216 = t208 ^ t209
+t217 = t199 ^ t191
+s0 = t211 ^ t212
+s2 = t210 ~^ t213
+s4 = t210 ^ t214
+s6 = t215 ~^ t216
+s7 = t210 ~^ t217

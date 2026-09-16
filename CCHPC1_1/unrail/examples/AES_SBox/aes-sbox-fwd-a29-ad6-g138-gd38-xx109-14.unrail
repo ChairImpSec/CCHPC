@@ -1,0 +1,176 @@
+# taken from:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/sbox/aes-sbox-fwd-a29-ad6-g138-gd38-xx109-14.circ.txt
+# NIST AES circuit index:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/README.md
+# original 29-AND construction transformed by NIST:
+# https://umizame.github.io/S-box_29-AND/
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=29, DR=14, DR2SR_B2F=15
+# L:  total=109, DR=74, SR_F2B=2, SR_B2F=33
+# REG=8
+#
+# #gates:     138
+# depth (NL):  38 (6)
+# #L:          109
+# #NL:         29
+input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
+input clk clock
+input prch precharge
+input r randomness
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
+
+t1 = x1 ^ x2
+t2 = x0 ^ x6
+t3 = x5 ^ x6
+t4 = x4 ~^ t3
+t5 = t1 ^ x7
+t6 = x2 ~^ t4
+t7 = x0 ^ t5
+t8 = x3 ^ t5
+t9 = x6 ^ t5
+t10 = t2 ^ t8
+t11 = t3 ^ t7
+t12 = t6 ^ t5
+t13 = t6 ^ x7
+a1 = t5 & t9
+a2 = x7 & t8
+a3 = t6 & t2
+t14 = x7 ^ t11
+t15 = t8 ^ t11
+t16 = x4 ^ t10
+t17 = x4 ^ a1
+a4 = t13 & t10
+a5 = t12 & t7
+t18 = t16 ^ t13
+t19 = t5 ^ t16
+t20 = t1 ^ t16
+t21 = a1 ^ a5
+a6 = t4 & t16
+t22 = t18 ^ a3
+t23 = t4 ^ t21
+t24 = a3 ^ t21
+t25 = a4 ^ a6
+a7 = t19 & t15
+a8 = t18 & t3
+a9 = t20 & t11
+t26 = t17 ^ t22
+t27 = x0 ^ a7
+t28 = a2 ^ a7
+t29 = a4 ^ a8
+t30 = t25 ^ a8
+t31 = t6 ^ a9
+t32 = x6 ^ t28
+t33 = t27 ^ t31
+t34 = t28 ^ a9
+t35 = t32 ^ t29
+t36 = t26 ^ t33
+t37 = t25 ^ t33
+t38 = t29 ^ t33
+t39 = t35 ^ t37
+t40 = t23 ~^ t38
+t41 = t36 ^ t40
+a10 = t39 & t36
+t42 = t41 ^ t39
+t43 = t35 ^ a10
+t44 = t41 ^ t43
+a11 = t40 & t43
+t45 = t42 ^ a11
+a12 = t35 & t44
+t46 = x0 ~^ t45
+t47 = a10 ~^ a12
+t48 = t12 ^ t46
+t49 = t9 ^ t46
+t50 = x6 ^ t48
+a13 = t37 & t47
+t51 = t7 ^ t50
+t52 = t14 ~^ a13
+t53 = t43 ^ a13
+t54 = t40 ^ t51
+t55 = t39 ^ t52
+t56 = a12 ^ t52
+a14 = t45 & t53
+t57 = t8 ^ t55
+t58 = t20 ^ t56
+t59 = t48 ~^ t56
+t60 = t54 ^ a14
+t61 = t19 ^ t57
+t62 = t15 ^ t58
+t63 = t4 ~^ t59
+t64 = t18 ^ t59
+t65 = x4 ^ t59
+t66 = t45 ^ t60
+t67 = t49 ~^ t60
+t68 = t5 ^ t60
+t69 = t55 ~^ t62
+t70 = x7 ^ t62
+t71 = t14 ^ t62
+t72 = t13 ^ t63
+t73 = t2 ^ t67
+t74 = t55 ~^ t67
+t75 = t61 ~^ t66
+a15 = t60 & t48
+t76 = t19 ^ t69
+t77 = t69 ~^ t60
+t78 = t10 ^ t74
+a16 = t61 & t62
+a17 = t67 & t51
+a18 = t68 & t46
+a19 = t66 & t49
+t79 = t16 ^ t77
+t80 = t24 ^ a19
+a20 = t57 & t70
+a21 = t55 & t71
+a22 = t69 & t56
+a23 = t73 & t50
+a24 = t74 & t65
+a25 = t75 & t72
+a26 = t76 & t58
+a27 = t77 & t59
+a28 = t78 & t63
+t81 = a17 ^ a27
+t82 = a24 ^ a27
+t83 = a25 ^ a27
+t84 = t34 ^ a28
+t85 = a23 ^ a28
+a29 = t79 & t64
+t86 = t80 ^ t85
+t87 = a18 ^ a29
+t88 = a20 ~^ a29
+t89 = t30 ^ t86
+t90 = a26 ^ t86
+s5 = t85 ^ t87
+t91 = t84 ^ t90
+t92 = a15 ^ s5
+t93 = t90 ^ t88
+t94 = a22 ^ t91
+s2 = t82 ^ t93
+t95 = t94 ^ t93
+t96 = a16 ^ t95
+t97 = t81 ^ t95
+s6 = a21 ^ t96
+t98 = t91 ^ t96
+t99 = t89 ^ s6
+t100 = t99 ^ t97
+s7 = a25 ^ t99
+s0 = a19 ^ t100
+t101 = t100 ^ t92
+s1 = t101 ^ t98
+s4 = t83 ^ t101
+s3 = t94 ^ s4

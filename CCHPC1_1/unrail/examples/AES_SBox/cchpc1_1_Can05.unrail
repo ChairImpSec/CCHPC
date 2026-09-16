@@ -1,35 +1,41 @@
 # taken from:
+# https://doi.org/10.1007/11545262_32
+# implementation source:
 # https://github.com/coruus/canright-aes-sboxes/blob/master/verilog/sbox.verilog
-# 
-# Converted using yosys and then manually converted to unrail syntax
-# 
-# #gates:      126
-# depth (NL):   24 (8)
-# #L:           78
-# #NL:          48
-
-# I/O config
-input A7 data
-input A6 data
-input A5 data
-input A4 data
-input A3 data
-input A2 data
-input A1 data
-input A0 data
+#
+# Converted using yosys and then manually converted to unrail syntax.
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=48, DR=30, DR2SR_B2F=18
+# L:  total=78, DR=34, SR_F2B=13, SR_B2F=31
+# REG=8
+#
+# #gates:     126
+# depth (NL):  24 (8)
+# #L:          78
+# #NL:         48
+input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
 input clk clock
 input prch precharge
 input r randomness
-output Q7 data
-output Q6 data
-output Q5 data
-output Q4 data
-output Q3 data
-output Q2 data
-output Q1 data
-output Q0 data
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
 
-# Algorithm
 D3 = T5 ~^ _9_
 T9 = C6 ~^ _5_
 _10_ = ~ Z0
@@ -154,34 +160,34 @@ Z3 = ~ B3
 Z2 = ~ B2
 Z1 = ~ R4
 Z0 = ~ B0
-Q7 = ~ T4
-Q6 = ~ T1
-Q5 = ~ T3
-Q4 = ~ T5
-Q3 = ~ D3
-Q2 = ~ D2
-Q1 = ~ T7
-Q0 = ~ T9
-B2 = ~ A0
+s0 = ~ T4
+s1 = ~ T1
+s2 = ~ T3
+s3 = ~ T5
+s4 = ~ D3
+s5 = ~ D2
+s6 = ~ T7
+s7 = ~ T9
+B2 = ~ x7
 _0_ = C3 ^ C5
 T4 = ~ _0_
 T3 = C6 ^ C0
 T1 = C7 ^ C3
-_1_ = A1 ~^ A3
-_2_ = A0 ~^ _1_
-_3_ = A4 ^ A7
+_1_ = x6 ~^ x4
+_2_ = x7 ~^ _1_
+_3_ = x3 ^ x0
 B3 = _2_ ~^ _3_
-_4_ = A0 ^ A6
-R4 = A5 ~^ _4_
-B5 = A1 ^ R4
-R5 = A4 ^ R4
+_4_ = x7 ^ x1
+R4 = x2 ~^ _4_
+B5 = x6 ^ R4
+R5 = x3 ^ R4
 _5_ = C4 ~^ C1
 T7 = C5 ~^ _5_
 T5 = C7 ~^ _0_
-_6_ = A1 ^ A2
-_7_ = A3 ^ _6_
+_6_ = x6 ^ x5
+_7_ = x4 ^ _6_
 B0 = _4_ ~^ _7_
-B4 = A7 ^ R4
+B4 = x0 ^ R4
 B7 = _6_ ^ B4
 _8_ = C2 ^ _0_
 D2 = T3 ~^ _8_

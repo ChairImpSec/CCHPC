@@ -1,59 +1,64 @@
 # taken from:
-# https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8650149
-# 
+# https://doi.org/10.1109/TENCON.2018.8650149
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=32, DR=14, DR2SR_B2F=18
+# L:  total=80, DR=51, SR_F2B=1, SR_B2F=28
+# REG=8
+#
 # #gates:     112
 # depth (NL):  25 (5)
 # #L:          80
 # #NL:         32
-
-input x7 data
-input x6 data
-input x5 data
-input x4 data
-input x3 data
-input x2 data
-input x1 data
 input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
 input clk clock
 input prch precharge
 input r randomness
-output y7 data
-output y6 data
-output y5 data
-output y4 data
-output y3 data
-output y2 data
-output y1 data
-output y0 data
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
 
-U0 = x4 ^ x2
-U1 = x7 ^ x1
-U2 = x7 ^ x4
-U3 = x7 ^ x2
-U4 = x6 ^ x5
-U5 = U4 ^ x0
-U6 = U5 ^ x4
+U0 = x3 ^ x5
+U1 = x0 ^ x6
+U2 = x0 ^ x3
+U3 = x0 ^ x5
+U4 = x1 ^ x2
+U5 = U4 ^ x7
+U6 = U5 ^ x3
 U7 = U1 ^ U0
-U8 = U5 ^ x7
-U9 = U5 ^ x1
+U8 = U5 ^ x0
+U9 = U5 ^ x6
 U10 = U9 ^ U3
-U11 = x3 ^ U7
-U12 = U11 ^ x2
-U13 = U11 ^ x6
-U14 = U12 ^ x0
+U11 = x4 ^ U7
+U12 = U11 ^ x5
+U13 = U11 ^ x1
+U14 = U12 ^ x7
 U15 = U12 ^ U4
 U16 = U13 ^ U2
-U17 = x0 ^ U16
+U17 = x7 ^ U16
 U18 = U15 ^ U16
 U19 = U15 ^ U3
 U20 = U4 ^ U16
 U21 = U1 ^ U20
-U22 = x7 ^ U20
-
+U22 = x0 ^ U20
 M0 = U7 & U12
 M1 = U10 & U14
 M2 = M1 ^ M0
-M3 = U6 & x0
+M3 = U6 & x7
 M4 = M3 ^ M0
 M5 = U1 & U20
 M6 = U9 & U5
@@ -95,7 +100,7 @@ M41 = M31 ^ M28
 M42 = M39 ^ M38
 N0 = M41 & U12
 N1 = M28 & U14
-N2 = M31 & x0
+N2 = M31 & x7
 N3 = M40 & U20
 N4 = M34 & U5
 N5 = M37 & U17
@@ -111,7 +116,6 @@ N14 = M37 & U8
 N15 = M39 & U2
 N16 = M42 & U0
 N17 = M38 & U3
-
 B0 = N15 ^ N16
 B1 = N10 ^ B0
 B2 = N9 ^ B1
@@ -126,17 +130,17 @@ B10 = B5 ^ B4
 B11 = N3 ^ N5
 B12 = N13 ^ B0
 B13 = B3 ^ B11
-y4 = B2 ^ B10
+s3 = B2 ^ B10
 B14 = N6 ^ B7
 B15 = N14 ^ B9
 B16 = B12 ^ B13
-y0 = N12 ~^ B16
+s7 = N12 ~^ B16
 B17 = N15 ^ B14
 B18 = B1 ^ N11
-y7 = B2 ^ B14
-y1 = B9 ~^ B16
-y3 = B13 ^ y4
-y6 = y4 ~^ B14
+s0 = B2 ^ B14
+s6 = B9 ~^ B16
+s4 = B13 ^ s3
+s1 = s3 ~^ B14
 B19 = B15 ^ B17
-y5 = B19 ~^ N17
-y2 = B18 ^ B15
+s2 = B19 ~^ N17
+s5 = B18 ^ B15

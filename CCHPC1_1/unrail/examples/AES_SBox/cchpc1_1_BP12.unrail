@@ -1,63 +1,68 @@
 # taken from:
-# https://inria.hal.science/hal-01518214v1/preview/978-3-642-30436-1_24_Chapter.pdf#page=2
-# 
+# https://doi.org/10.1007/978-3-642-30436-1_24
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=34, DR=16, DR2SR_B2F=18
+# L:  total=94, DR=55, SR_F2B=1, SR_B2F=38
+# REG=8
+#
 # #gates:     128
 # depth (NL):  16 (4)
 # #L:          94
 # #NL:         34
-
-input U0 data
-input U1 data
-input U2 data
-input U3 data
-input U4 data
-input U5 data
-input U6 data
-input U7 data
+input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
 input clk clock
 input prch precharge
 input r randomness
-output S0 data
-output S1 data
-output S2 data
-output S3 data
-output S4 data
-output S5 data
-output S6 data
-output S7 data
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
 
-T1 = U0 ^ U3
-T2 = U0 ^ U5
-T3 = U0 ^ U6
-T4 = U3 ^ U5
-T5 = U4 ^ U6
+T1 = x0 ^ x3
+T2 = x0 ^ x5
+T3 = x0 ^ x6
+T4 = x3 ^ x5
+T5 = x4 ^ x6
 T6 = T1 ^ T5
-T7 = U1 ^ U2
-T8 = U7 ^ T6
-T9 = U7 ^ T7
+T7 = x1 ^ x2
+T8 = x7 ^ T6
+T9 = x7 ^ T7
 T10 = T6 ^ T7
-T11 = U1 ^ U5
-T12 = U2 ^ U5
+T11 = x1 ^ x5
+T12 = x2 ^ x5
 T13 = T3 ^ T4
 T14 = T6 ^ T11
 T15 = T5 ^ T11
 T16 = T5 ^ T12
 T17 = T9 ^ T16
-T18 = U3 ^ U7
+T18 = x3 ^ x7
 T19 = T7 ^ T18
 T20 = T1 ^ T19
-T21 = U6 ^ U7
+T21 = x6 ^ x7
 T22 = T7 ^ T21
 T23 = T2 ^ T22
 T24 = T2 ^ T10
 T25 = T20 ^ T17
 T26 = T3 ^ T16
 T27 = T1 ^ T12
-
 M1 = T13 & T6
 M2 = T23 & T8
 M3 = T14 ^ M1
-M4 = T19 & U7
+M4 = T19 & x7
 M5 = M4 ^ M1
 M6 = T3 & T16
 M7 = T22 & T9
@@ -101,7 +106,7 @@ M44 = M39 ^ M40
 M45 = M42 ^ M41
 M46 = M44 & T6
 M47 = M40 & T8
-M48 = M39 & U7
+M48 = M39 & x7
 M49 = M43 & T16
 M50 = M38 & T9
 M51 = M37 & T17
@@ -117,7 +122,6 @@ M60 = M37 & T20
 M61 = M42 & T1
 M62 = M45 & T4
 M63 = M41 & T2
-
 L0 = M61 ^ M62
 L1 = M50 ^ M56
 L2 = M46 ^ M48
@@ -148,11 +152,11 @@ L26 = L7 ^ L9
 L27 = L8 ^ L10
 L28 = L11 ^ L14
 L29 = L11 ^ L17
-S0 = L6 ^ L24
-S1 = L16 ~^ L26
-S2 = L19 ~^ L28
-S3 = L6 ^ L21
-S4 = L20 ^ L22
-S5 = L25 ^ L29
-S6 = L13 ~^ L27
-S7 = L6 ~^ L23
+s0 = L6 ^ L24
+s1 = L16 ~^ L26
+s2 = L19 ~^ L28
+s3 = L6 ^ L21
+s4 = L20 ^ L22
+s5 = L25 ^ L29
+s6 = L13 ~^ L27
+s7 = L6 ~^ L23

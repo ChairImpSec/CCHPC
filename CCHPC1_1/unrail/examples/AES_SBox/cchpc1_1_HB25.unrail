@@ -1,57 +1,63 @@
 # taken from:
-# https://tches.iacr.org/index.php/TCHES/article/view/11942/11802
-# 
+# https://doi.org/10.46586/tches.v2025.i1.656-683
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=42, DR=30, DR2SR_B2F=12
+# L:  total=97, DR=75, SR_F2B=3, SR_B2F=19
+# REG=8
+#
 # #gates:     139
 # depth (NL):  14 (3)
 # #L:          97
 # #NL:         42
-
-input x7 data
-input x6 data
-input x5 data
-input x4 data
-input x3 data
-input x2 data
-input x1 data
 input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
 input clk clock
 input prch precharge
 input r randomness
-output y7 data
-output y6 data
-output y5 data
-output y4 data
-output y3 data
-output y2 data
-output y1 data
-output y0 data
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
 
-p0 = x1 ^ x3
-p1 = x5 ^ x6
-b4 = x0 ^ p1
-p2 = x2 ^ x5
-a7 = x2 ^ x7
-a0 = x4 ^ b4
-a5 = x1 ^ x7
-a6 = x4 ^ x7
-a8 = x2 ^ x4
+p0 = x6 ^ x4
+p1 = x2 ^ x1
+b4 = x7 ^ p1
+p2 = x5 ^ x2
+a7 = x5 ^ x0
+a0 = x3 ^ b4
+a5 = x6 ^ x0
+a6 = x3 ^ x0
+a8 = x5 ^ x3
 b2 = p0 ^ a6
 b5 = p0 ^ p2
-c0 = x7 ^ b5
-p3 = x2 ^ a5
+c0 = x0 ^ b5
+p3 = x5 ^ a5
 b7 = p1 ^ b2
-a4 = x1 ^ b4
+a4 = x6 ^ b4
 b8 = p2 ^ a6
-a3 = x7 ^ b4
-c1 = x1 ^ c0
+a3 = x0 ^ b4
+c1 = x6 ^ c0
 b6 = p1 ^ b5
-a2 = x4 ^ p3
-b1 = x0 ^ b2
+a2 = x3 ^ p3
+b1 = x7 ^ b2
 b3 = b4 ^ b5
 c2 = a7 ^ b7
 c3 = a6 ^ b6
 a1 = b4 ^ p3
-d0 = a0 & x0
+d0 = a0 & x7
 d1 = a1 & b1
 d2 = a2 & b2
 d3 = a3 & b3
@@ -93,7 +99,7 @@ f5 = a5 & e5
 f6 = a6 & e6
 f7 = a7 & e7
 f8 = a8 & e8
-g0 = x0 & e0
+g0 = x7 & e0
 g1 = b1 & e1
 g2 = b2 & e2
 g3 = b3 & e3
@@ -117,18 +123,18 @@ i2 = r0 ^ r1
 r5 = f5 ^ f6
 i4 = r3 ^ r5
 i3 = r4 ^ r5
-s0 = g1 ^ g8
-s1 = g0 ^ g7
-s2 = g2 ^ g6
-j0 = s1 ^ s2
-s3 = g4 ^ g8
-j1 = s0 ^ s2
-s4 = g3 ^ g7
-j5 = s3 ^ s4
-j2 = s0 ^ s1
-s5 = g5 ^ g6
-j4 = s3 ^ s5
-j3 = s4 ^ s5
+unrail_orig_s0 = g1 ^ g8
+unrail_orig_s1 = g0 ^ g7
+unrail_orig_s2 = g2 ^ g6
+j0 = unrail_orig_s1 ^ unrail_orig_s2
+unrail_orig_s3 = g4 ^ g8
+j1 = unrail_orig_s0 ^ unrail_orig_s2
+unrail_orig_s4 = g3 ^ g7
+j5 = unrail_orig_s3 ^ unrail_orig_s4
+j2 = unrail_orig_s0 ^ unrail_orig_s1
+unrail_orig_s5 = g5 ^ g6
+j4 = unrail_orig_s3 ^ unrail_orig_s5
+j3 = unrail_orig_s4 ^ unrail_orig_s5
 t0 = e7 ^ h1
 k0 = h2 ^ t0
 t1 = e8 ^ h0
@@ -157,11 +163,11 @@ u9 = l4 ^ l5
 u7 = u0 ^ u3
 u8 = u1 ^ u2
 u10 = u1 ^ u6
-y7 = u2 ^ u4
-y6 = u4 ~^ u5
-y5 = u1 ~^ u3
-y4 = u5 ^ y7
-y3 = y6 ~^ u10
-y2 = u7 ^ u8
-y1 = u6 ~^ u9
-y0 = u8 ^ y1
+s0 = u2 ^ u4
+s1 = u4 ~^ u5
+s2 = u1 ~^ u3
+s3 = u5 ^ s0
+s4 = s1 ~^ u10
+s5 = u7 ^ u8
+s6 = u6 ~^ u9
+s7 = u8 ^ s6

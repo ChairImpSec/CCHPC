@@ -1,0 +1,188 @@
+# taken from:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/sbox/aes-sbox-fwd-a45-ad4-g151-gd12-xx106-26.circ.txt
+# NIST AES circuit index:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/README.md
+# NIST Circuit Complexity repository circuit; the NIST source file does not identify a separate originating paper.
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=45, DR=18, DR2SR_B2F=27
+# L:  total=106, DR=76, SR_F2B=0, SR_B2F=30
+# REG=8
+#
+# #gates:     151
+# depth (NL):  12 (4)
+# #L:          106
+# #NL:         45
+input x0 data
+input x1 data
+input x2 data
+input x3 data
+input x4 data
+input x5 data
+input x6 data
+input x7 data
+input clk clock
+input prch precharge
+input r randomness
+output s0 data
+output s1 data
+output s2 data
+output s3 data
+output s4 data
+output s5 data
+output s6 data
+output s7 data
+
+t1 = x0 ^ x1
+t2 = x0 ^ x2
+t3 = x1 ^ x2
+t4 = x0 ^ x3
+t5 = x1 ^ x3
+t6 = x2 ^ x3
+t7 = x0 ^ x4
+t8 = x0 ~^ x5
+t9 = x3 ^ x5
+t10 = x3 ~^ x5
+t11 = x4 ^ x6
+t12 = x5 ~^ x6
+t13 = x2 ^ x7
+t14 = x5 ^ x7
+t15 = x6 ^ x7
+t16 = x1 ^ x4
+t17 = x0 ^ t5
+t18 = x0 ^ t6
+t19 = t3 ^ t7
+t20 = x4 ^ t6
+t21 = t6 ~^ t7
+t22 = x5 ^ t3
+t23 = t3 ~^ t8
+t24 = x3 ^ t11
+t25 = t11 ^ t5
+t26 = x3 ~^ t12
+t27 = t12 ~^ t4
+t28 = t1 ~^ t13
+t29 = x7 ~^ t7
+t30 = t13 ^ t16
+t31 = x1 ^ t14
+t32 = t14 ~^ t3
+t33 = x0 ~^ t15
+t34 = t15 ~^ t3
+t35 = x3 ^ t15
+t36 = x4 ^ t15
+t37 = t4 & t2
+t38 = x0 ^ t25
+t39 = t21 ~^ t27
+t40 = t19 ^ t27
+t41 = t31 ^ t7
+t42 = x4 ~^ t32
+t43 = t14 ~^ t21
+t44 = t30 ^ t9
+t45 = t1 ^ t36
+t46 = x6 ^ t30
+t47 = x7 ^ t25
+t48 = x5 ~^ t34
+t49 = t33 ~^ t9
+t50 = t36 ~^ t8
+t51 = t23 ^ t36
+t52 = t14 ^ t24
+t53 = t9 & t19
+t54 = t30 & t27
+t55 = t8 & t18
+t56 = t34 & t29
+t57 = t32 & t33
+t58 = t10 & t24
+t59 = t12 & t20
+t60 = t14 & t23
+t61 = t34 & t21
+t62 = t26 & t28
+t63 = t37 ^ t53
+t64 = t53 ^ t54
+t65 = t55 ^ t56
+t66 = t53 ^ t57
+t67 = t54 ^ t57
+t68 = t37 ^ t58
+t69 = t59 ^ t60
+t70 = t61 ^ t62
+t71 = t64 ~^ t65
+t72 = t67 ~^ t68
+t73 = t66 ~^ t69
+t74 = t63 ~^ t70
+t75 = t71 ^ t72
+t76 = t73 ^ t74
+t77 = t73 & t71
+t78 = t71 & t74
+t79 = t72 & t73
+t80 = t77 ^ t72
+t81 = t77 ^ t74
+t82 = t77 ^ t75
+t83 = t77 ^ t76
+t84 = t75 & t78
+t85 = t76 & t79
+t86 = t84 ^ t82
+t87 = t85 ^ t83
+t88 = t81 & t75
+t89 = t80 & t76
+t90 = t86 ^ t87
+t91 = t88 ^ t72
+t92 = t89 ^ t74
+t93 = t86 & t49
+t94 = t87 & t50
+t95 = t86 & t2
+t96 = t87 & t17
+t97 = t87 & t22
+t98 = t87 & t25
+t99 = t86 & t38
+t100 = t86 & t47
+t101 = t87 ^ t91
+t102 = t91 ^ t92
+t103 = t93 ^ t94
+t104 = t95 ^ t96
+t105 = t94 ^ t99
+t106 = t98 ^ t99
+t107 = t97 ^ t98
+t108 = t96 ^ t100
+t109 = t97 ^ t100
+t110 = t93 ^ t98
+t111 = t90 & t46
+t112 = t91 & t43
+t113 = t92 & t31
+t114 = t91 & t40
+t115 = t92 & t42
+t116 = t92 & t52
+t117 = t90 & t51
+t118 = t91 & t5
+t119 = t92 & t19
+t120 = t92 & t38
+t121 = t91 & t41
+t122 = t90 & t39
+t123 = t91 & t45
+t124 = t92 & t35
+t125 = t91 & t48
+t126 = t92 & t7
+t127 = t90 & x7
+t128 = t111 ^ t112
+t129 = t113 ^ t103
+t130 = t114 ^ t115
+t131 = t116 ^ t104
+t132 = t116 ^ t105
+t133 = t121 ^ t106
+t134 = t125 ^ t127
+t135 = t117 ^ t107
+t136 = t118 ^ t119
+t137 = t122 ^ t108
+t138 = t123 ^ t124
+t139 = t121 ^ t109
+t140 = t125 ^ t126
+t141 = t120 ^ t110
+t142 = t101 & t44
+t143 = t102 & t6
+s2 = t128 ~^ t129
+s1 = t130 ~^ t131
+s0 = t135 ^ t136
+s4 = t137 ^ t138
+s3 = t139 ^ t140
+s7 = t132 ~^ t134
+s5 = t142 ^ t141
+s6 = t143 ~^ t133

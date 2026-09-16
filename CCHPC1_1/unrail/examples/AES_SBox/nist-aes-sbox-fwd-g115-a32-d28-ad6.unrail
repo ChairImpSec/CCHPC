@@ -1,11 +1,27 @@
-# taken from:
+# taken from NIST Circuit Complexity:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/aes-sbox-fwd-g115-a32-d28-ad6.slp
+# NIST project listing:
+# https://github.com/usnistgov/Circuits/blob/master/data/slp/aes/README.md
+# NIST source cites the later journal article (BMP13):
+# https://doi.org/10.1007/s00145-012-9124-7
+# the same 115-gate circuit was already published in BP10:
 # https://eprint.iacr.org/2009/191.pdf
-# 
+#
+# Equivalent to the BP10 circuit benchmarked in CCHPC1.1 [BP10].
+# CCHPC1.1 source transcription:
+# https://github.com/ChairImpSec/CCHPC/blob/main/CCHPC1_1/unrail/examples/BP10.unrail
+#
+# normalized interface: x0..x7 / s0..s7, index 0 = AES byte MSB.
+#
+# Unrail results:
+# NL: total=32, DR=14, DR2SR_B2F=18
+# L:  total=83, DR=52, SR_F2B=1, SR_B2F=30
+# REG=8
+#
 # #gates:     115
 # depth (NL):  28 (6)
 # #L:          83
 # #NL:         32
-
 input x0 data
 input x1 data
 input x2 data
@@ -49,7 +65,6 @@ y19 = y10 ^ y8
 y16 = t0 ^ y11
 y21 = y13 ^ y16
 y18 = x0 ^ y16
-
 t2 = y12 & y15
 t3 = y3 & y6
 t4 = t3 ^ t2
@@ -112,7 +127,6 @@ z14 = t29 & y2
 z15 = t42 & y9
 z16 = t45 & y14
 z17 = t41 & y8
-
 t46 = z15 ^ z16
 t47 = z10 ^ z11
 t48 = z5 ^ z13
