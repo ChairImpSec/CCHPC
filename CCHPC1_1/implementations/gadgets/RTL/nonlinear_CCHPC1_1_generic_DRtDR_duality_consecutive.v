@@ -162,9 +162,17 @@ module nonlinear_CCHPC1_1_generic_DRtDR_duality_consecutive #( parameter securit
 
             wire unused_r_DR0;
             wire unused_r_DR1;
+            wire unused_t_DR0;
+            wire unused_t_DR1;
+            wire unused_t_fwd_SR0;
+            wire unused_t_fwd_SR1;
 
             assign unused_r_DR0 = ^r_DR0;
             assign unused_r_DR1 = ^r_DR1;
+            assign unused_t_DR0 = ^t_DR0;
+            assign unused_t_DR1 = ^t_DR1;
+            assign unused_t_fwd_SR0 = ^t_fwd_SR0;
+            assign unused_t_fwd_SR1 = ^t_fwd_SR1;
 
         end
 				

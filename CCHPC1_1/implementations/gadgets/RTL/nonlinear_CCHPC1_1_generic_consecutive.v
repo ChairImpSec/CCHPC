@@ -143,8 +143,12 @@ module nonlinear_CCHPC1_1_generic_consecutive #( parameter security_order = 1, O
 			end else begin : gen_unused_rand_
 
 					wire unused_r_DRorSR;
+					wire unused_t_DRorSR;
+					wire unused_t_fwd_SR;
 
 					assign unused_r_DRorSR = ^r_DRorSR;
+					assign unused_t_DRorSR = ^t_DRorSR;
+					assign unused_t_fwd_SR = ^t_fwd_SR;
 
 			end
 
