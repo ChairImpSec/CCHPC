@@ -44,9 +44,7 @@ The wAOI22 parameter realizes the area-oriented mapping discussed for the DRP co
 
 ## Reference configuration
 
-The reference module families are `nonlinear_CCHPC1_1_generic_DRtDR`, `nonlinear_CCHPC1_1_generic_DRtDR_duality`, `nonlinear_CCHPC1_1_generic_DRtSR`, and `nonlinear_CCHPC1_1_generic_DRtSR_duality`. With their default parameter values, these are the repository's baseline regular and duality implementations of **CCHPC1.1-AND** and **CCHPC1.1-AND-DR2SR**.
-
-In all four modules, **`FORWARD_R = 0`**, so the non-linear construction follows Section 4.1.2 of the paper. The `DRtDR` modules default to `wAOI22 = 1` and `OPT_PRCH = 1`. The `DRtSR` modules default to `wAOI22 = 0` and `RAND_REG = 0`. In all cases, `CONF = 2'b00`, input/output inversions are disabled, `ALIGN_OUT = 0`, and `security_order = 1` unless overridden. The `_wRandCONV` and `_wPRCHn` modules provide alternative integration choices around these gadget families.
+The reference module families are `nonlinear_CCHPC1_1_generic_DRtDR`, `nonlinear_CCHPC1_1_generic_DRtDR_duality`, `nonlinear_CCHPC1_1_generic_DRtSR`, and `nonlinear_CCHPC1_1_generic_DRtSR_duality`. With their default parameter values, these are the repository's baseline regular and duality implementations of **CCHPC1.1-AND** and **CCHPC1.1-AND-DR2SR**. In all four modules, the non-linear configuration follows Section 4.1.2 of the paper.
 
 ## Testbenches
 
