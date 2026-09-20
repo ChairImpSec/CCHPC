@@ -7,8 +7,8 @@
 module Looped_Sbox_BP_impr_generic_duality #(
     parameter security_order   = 1,
     parameter FORWARD_R        = 0,
-    parameter wAOI22_linear    = 0,
-    parameter wAOI22_nonlinear = 1,
+    parameter wAOI22_linear    = 1,
+    parameter wAOI22_nonlinear = 0,
     parameter ALIGN_OUT        = 0
 )(
     clk, rst, r_SR, r_duality0, r_duality1, a, z, prch0_o, prch1_o

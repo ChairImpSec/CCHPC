@@ -1,8 +1,8 @@
 module AES_keySchedule_generic_duality #(
     parameter security_order   = 1,
     parameter FORWARD_R        = 0,
-    parameter wAOI22_linear    = 0,
-    parameter wAOI22_nonlinear = 1
+    parameter wAOI22_linear    = 1,
+    parameter wAOI22_nonlinear = 0
 )(
     clk, sel, prch0, prch1, r_SR, r_duality0, r_duality1, Rcon, key, roundKey
 );

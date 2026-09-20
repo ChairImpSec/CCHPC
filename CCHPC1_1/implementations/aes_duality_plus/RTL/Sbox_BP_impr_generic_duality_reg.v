@@ -3,8 +3,8 @@
 module Sbox_BP_impr_generic_duality_reg #(
     parameter security_order   = 1,
     parameter FORWARD_R        = 0,
-    parameter wAOI22_linear    = 0,
-    parameter wAOI22_nonlinear = 1,
+    parameter wAOI22_linear    = 1,
+    parameter wAOI22_nonlinear = 0,
     parameter MoveInputREG     = 1,
     parameter isKeySchedule = 0
 )(
