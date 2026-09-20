@@ -280,10 +280,10 @@ module nonlinear_CCHPC1_1_generic_DRtSR_duality #(
 
             for (zl = 1; zl < d-1; zl=zl+1) begin : gen_layer_
 
-                localparam integer RAND_COUNT  = d-1-zl;
+                localparam integer RAND_COUNT_FWD  = d-1-zl;
                 localparam integer RAND_OFFSET = ((zl-1)*(2*d-zl-2))/2;
 
-                assign z_internal[zl] = ^randConsec[RAND_OFFSET+RAND_COUNT-1:RAND_OFFSET];
+                assign z_internal[zl] = ^randConsec[RAND_OFFSET+RAND_COUNT_FWD-1:RAND_OFFSET];
 
             end
 

@@ -462,22 +462,22 @@ module nonlinear_CCHPC1_1_generic_DRtDR_duality_wRandCONV #(
 
             for (zl = 1; zl < d-1; zl=zl+1) begin : gen_layer_
 
-                localparam integer RAND_COUNT  = d-1-zl;
+                localparam integer RAND_COUNT_FWD  = d-1-zl;
                 localparam integer RAND_OFFSET = ((zl-1)*(2*d-zl-2))/2;
 
                 DRP_XOR2_TREE #(
-                    .NUM_INPUTS(RAND_COUNT),
+                    .NUM_INPUTS(RAND_COUNT_FWD),
                     .wAOI22(wAOI22)
                 ) xor_rand_inst0 (
-                    .a(randConsec_DR0[2*(RAND_OFFSET+RAND_COUNT)-1:2*RAND_OFFSET]),
+                    .a(randConsec_DR0[2*(RAND_OFFSET+RAND_COUNT_FWD)-1:2*RAND_OFFSET]),
                     .z(z_duality0_internal[2*zl:2*zl-1])
                 );
 
                 DRP_XOR2_TREE #(
-                    .NUM_INPUTS(RAND_COUNT),
+                    .NUM_INPUTS(RAND_COUNT_FWD),
                     .wAOI22(wAOI22)
                 ) xor_rand_inst1 (
-                    .a(randConsec_DR1[2*(RAND_OFFSET+RAND_COUNT)-1:2*RAND_OFFSET]),
+                    .a(randConsec_DR1[2*(RAND_OFFSET+RAND_COUNT_FWD)-1:2*RAND_OFFSET]),
                     .z(z_duality1_internal[2*zl:2*zl-1])
                 );
 
