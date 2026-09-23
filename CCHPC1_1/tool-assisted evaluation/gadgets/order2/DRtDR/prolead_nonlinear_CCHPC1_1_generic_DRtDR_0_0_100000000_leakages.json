@@ -1,0 +1,221 @@
+{
+    "timestamp": "Sun Sep 20 11:41:54 2026",
+    "notion": "Probing Security",
+    "number_of_simulations": "100000000",
+    "total_number_of_probing_sets": "644",
+    "number_of_leaking_probing_sets": "0",
+    "number_of_non_leaking_probing_sets": "644",
+    "most_leaking_probing_sets_per_cycle": [
+        {
+            "probes": [
+                "z[0](1)",
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[5](1)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "a[0](1)",
+                "r_SR[0](1)",
+                "z[0](1)"
+            ],
+            "-log10(p)": "0.65954017485578098"
+        },
+        {
+            "probes": [
+                "gen_output_alignment__reg_z_layer0_inst_z_1_(2)",
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[3](2)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "a[0](1)",
+                "b[0](1)",
+                "r_SR[0](1)",
+                "gen_output_alignment__reg_z_layer0_inst_z_1_(1)",
+                "prch[0](2)",
+                "a[0](2)",
+                "b[0](2)",
+                "r_SR[0](2)",
+                "gen_output_alignment__reg_z_layer0_inst_z_1_(2)"
+            ],
+            "-log10(p)": "2.0949535680107578"
+        },
+        {
+            "probes": [
+                "gen_layer__2__gen_default__gen_default_prch__reg_t_inst_w[4](3)",
+                "gen_layer__2__gen_default__gen_default_prch__reg_t_inst_w[6](3)"
+            ],
+            "extensions": [
+                "prch[1](2)",
+                "gen_layer__2__gen_default__gen_default_prch__t_DR_in_4_(2)",
+                "nonlinear_precomp_b_delayed_0__1_(2)",
+                "prch[1](3)",
+                "gen_layer__2__gen_default__gen_default_prch__t_DR_in_4_(3)",
+                "nonlinear_precomp_b_delayed_0__1_(3)"
+            ],
+            "-log10(p)": "2.3557621178142942"
+        },
+        {
+            "probes": [
+                "z_internal_0_(4)",
+                "z_consecutive[1](4)"
+            ],
+            "extensions": [
+                "a[2](3)",
+                "a[1](3)",
+                "a[0](3)",
+                "b[2](3)",
+                "b[1](3)",
+                "b[0](3)",
+                "r_SR[1](3)",
+                "r_SR[0](3)",
+                "r_DR[1](3)",
+                "r_DR[0](3)",
+                "t_DR[7](3)",
+                "t_DR[6](3)",
+                "t_DR[5](3)",
+                "t_DR[4](3)",
+                "t_DR[3](3)",
+                "t_DR[2](3)",
+                "t_DR[1](3)",
+                "t_DR[0](3)",
+                "a[2](4)",
+                "a[1](4)",
+                "a[0](4)",
+                "b[2](4)",
+                "b[1](4)",
+                "b[0](4)",
+                "r_SR[1](4)",
+                "r_SR[0](4)",
+                "r_DR[1](4)",
+                "r_DR[0](4)",
+                "t_DR[7](4)",
+                "t_DR[6](4)",
+                "t_DR[5](4)",
+                "t_DR[4](4)",
+                "t_DR[3](4)",
+                "t_DR[2](4)",
+                "t_DR[1](4)",
+                "t_DR[0](4)"
+            ],
+            "-log10(p)": "3.5770402449801386"
+        }
+    ],
+    "most_leaking_probing_sets_in_total": [
+        {
+            "probes": [
+                "z_internal_0_(4)",
+                "z_consecutive[1](4)"
+            ],
+            "extensions": [
+                "a[2](3)",
+                "a[1](3)",
+                "a[0](3)",
+                "b[2](3)",
+                "b[1](3)",
+                "b[0](3)",
+                "r_SR[1](3)",
+                "r_SR[0](3)",
+                "r_DR[1](3)",
+                "r_DR[0](3)",
+                "t_DR[7](3)",
+                "t_DR[6](3)",
+                "t_DR[5](3)",
+                "t_DR[4](3)",
+                "t_DR[3](3)",
+                "t_DR[2](3)",
+                "t_DR[1](3)",
+                "t_DR[0](3)",
+                "a[2](4)",
+                "a[1](4)",
+                "a[0](4)",
+                "b[2](4)",
+                "b[1](4)",
+                "b[0](4)",
+                "r_SR[1](4)",
+                "r_SR[0](4)",
+                "r_DR[1](4)",
+                "r_DR[0](4)",
+                "t_DR[7](4)",
+                "t_DR[6](4)",
+                "t_DR[5](4)",
+                "t_DR[4](4)",
+                "t_DR[3](4)",
+                "t_DR[2](4)",
+                "t_DR[1](4)",
+                "t_DR[0](4)"
+            ],
+            "-log10(p)": "3.5770402449801386"
+        },
+        {
+            "probes": [
+                "gen_layer__2__gen_default__gen_default_prch__reg_t_inst_w[4](3)",
+                "gen_layer__2__gen_default__gen_default_prch__reg_t_inst_w[6](3)"
+            ],
+            "extensions": [
+                "prch[1](2)",
+                "gen_layer__2__gen_default__gen_default_prch__t_DR_in_4_(2)",
+                "nonlinear_precomp_b_delayed_0__1_(2)",
+                "prch[1](3)",
+                "gen_layer__2__gen_default__gen_default_prch__t_DR_in_4_(3)",
+                "nonlinear_precomp_b_delayed_0__1_(3)"
+            ],
+            "-log10(p)": "2.3557621178142942"
+        },
+        {
+            "probes": [
+                "gen_layer__2__gen_default__gen_default_prch__reg_t_inst_w[7](3)",
+                "z[3](3)"
+            ],
+            "extensions": [
+                "prch[1](2)",
+                "a[4](2)",
+                "a[3](2)",
+                "b[4](2)",
+                "b[3](2)",
+                "gen_layer__2__gen_default__gen_default_prch__t_DR_in_4_(2)",
+                "nonlinear_precomp_b_delayed_0__1_(2)",
+                "nonlinear_precomp_a_delayed_0__1_(2)",
+                "t_DR[23](2)",
+                "t_DR[22](2)",
+                "t_DR[21](2)",
+                "t_DR[20](2)",
+                "t_DR[19](2)",
+                "t_DR[18](2)",
+                "t_DR[17](2)",
+                "t_DR[16](2)",
+                "t_DR[15](2)",
+                "t_DR[14](2)",
+                "t_DR[13](2)",
+                "t_DR[12](2)",
+                "t_DR[11](2)",
+                "t_DR[10](2)",
+                "t_DR[9](2)",
+                "t_DR[8](2)",
+                "prch[1](3)",
+                "a[4](3)",
+                "a[3](3)",
+                "b[4](3)",
+                "b[3](3)",
+                "gen_layer__2__gen_default__gen_default_prch__t_DR_in_4_(3)",
+                "nonlinear_precomp_b_delayed_0__1_(3)",
+                "nonlinear_precomp_a_delayed_0__1_(3)",
+                "t_DR[23](3)",
+                "t_DR[22](3)",
+                "t_DR[21](3)",
+                "t_DR[20](3)",
+                "t_DR[19](3)",
+                "t_DR[18](3)",
+                "t_DR[17](3)",
+                "t_DR[16](3)",
+                "t_DR[15](3)",
+                "t_DR[14](3)",
+                "t_DR[13](3)",
+                "t_DR[12](3)",
+                "t_DR[11](3)",
+                "t_DR[10](3)",
+                "t_DR[9](3)",
+                "t_DR[8](3)"
+            ],
+            "-log10(p)": "2.1469978971602171"
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+{
+    "timestamp": "Sun Sep 20 10:57:57 2026",
+    "notion": "Probing Security",
+    "number_of_simulations": "100000000",
+    "total_number_of_probing_sets": "24",
+    "number_of_leaking_probing_sets": "0",
+    "number_of_non_leaking_probing_sets": "24",
+    "most_leaking_probing_sets_per_cycle": [
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[4](1)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "r_SR[0](1)"
+            ],
+            "-log10(p)": "0.98695047328798213"
+        },
+        {
+            "probes": [
+                "z[0](2)"
+            ],
+            "extensions": [
+                "z[0](1)",
+                "z[0](2)"
+            ],
+            "-log10(p)": "0.98695047328798213"
+        },
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[5](3)"
+            ],
+            "extensions": [
+                "prch[0](2)",
+                "a[0](2)",
+                "r_SR[0](2)",
+                "prch[0](3)",
+                "a[0](3)",
+                "r_SR[0](3)"
+            ],
+            "-log10(p)": "0.87036960198467794"
+        }
+    ],
+    "most_leaking_probing_sets_in_total": [
+        {
+            "probes": [
+                "z[0](2)"
+            ],
+            "extensions": [
+                "z[0](1)",
+                "z[0](2)"
+            ],
+            "-log10(p)": "0.98695047328798213"
+        },
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[4](1)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "r_SR[0](1)"
+            ],
+            "-log10(p)": "0.98695047328798213"
+        },
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[6](1)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "b[0](1)",
+                "r_SR[0](1)"
+            ],
+            "-log10(p)": "0.98695047328798213"
+        }
+    ]
+}

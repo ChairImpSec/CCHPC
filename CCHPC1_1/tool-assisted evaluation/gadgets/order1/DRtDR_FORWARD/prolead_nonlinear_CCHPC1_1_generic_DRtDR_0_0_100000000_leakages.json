@@ -1,0 +1,89 @@
+{
+    "timestamp": "Sun Sep 20 11:26:40 2026",
+    "notion": "Probing Security",
+    "number_of_simulations": "100000000",
+    "total_number_of_probing_sets": "12",
+    "number_of_leaking_probing_sets": "0",
+    "number_of_non_leaking_probing_sets": "12",
+    "most_leaking_probing_sets_per_cycle": [
+        {
+            "probes": [
+                "z[0](1)"
+            ],
+            "extensions": [
+                "z[0](1)"
+            ],
+            "-log10(p)": "0"
+        },
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[5](2)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "a[0](1)",
+                "b[0](1)",
+                "r_SR[0](1)",
+                "prch[0](2)",
+                "a[0](2)",
+                "b[0](2)",
+                "r_SR[0](2)"
+            ],
+            "-log10(p)": "0.82050608330910879"
+        },
+        {
+            "probes": [
+                "z[0](3)"
+            ],
+            "extensions": [
+                "z[0](2)",
+                "z[0](3)"
+            ],
+            "-log10(p)": "1.0969428980066502"
+        }
+    ],
+    "most_leaking_probing_sets_in_total": [
+        {
+            "probes": [
+                "z[0](3)"
+            ],
+            "extensions": [
+                "z[0](2)",
+                "z[0](3)"
+            ],
+            "-log10(p)": "1.0969428980066502"
+        },
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[5](2)"
+            ],
+            "extensions": [
+                "prch[0](1)",
+                "a[0](1)",
+                "b[0](1)",
+                "r_SR[0](1)",
+                "prch[0](2)",
+                "a[0](2)",
+                "b[0](2)",
+                "r_SR[0](2)"
+            ],
+            "-log10(p)": "0.82050608330910879"
+        },
+        {
+            "probes": [
+                "gen_layer__1__gen_default__gen_default_prch__reg_t_inst_w[4](3)"
+            ],
+            "extensions": [
+                "prch[0](2)",
+                "a[0](2)",
+                "b[0](2)",
+                "r_SR[0](2)",
+                "prch[0](3)",
+                "a[0](3)",
+                "b[0](3)",
+                "r_SR[0](3)"
+            ],
+            "-log10(p)": "0.21305967783926"
+        }
+    ]
+}
