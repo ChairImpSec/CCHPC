@@ -1,0 +1,8 @@
+==================== Area Report ====================
+Design         : /mnt/a/ImpSec/unrail/results/AES_sboxes/NIST_designs/aes-sbox-inv-a30-ad4-g150-gd30-xx120-33/20261010-00_28_44_806/optimized.v
+Top module     : unrail_module
+Security order : 2
+Library        : NangateOpenCellLibrary_functional.lib (1 GE = NAND2_X1 = 0.798 um^2)
+Area           : 13446.300 um^2
+Area           : 16850.00 GE
+=====================================================
