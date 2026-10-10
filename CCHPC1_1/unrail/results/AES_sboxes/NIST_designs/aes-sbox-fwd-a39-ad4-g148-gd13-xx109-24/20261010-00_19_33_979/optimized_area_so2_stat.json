@@ -1,0 +1,35 @@
+{
+   "creator": "Yosys 0.68+ (git sha1 832843ad0-dirty, Release, GNU /home/conda/feedstock_root/build_artifacts/yosys_1785933756519/_build_env/bin/x86_64-conda-linux-gnu-c++ 14.4.0) [github.com/conda-forge/yosys-feedstock at main]",
+   "invocation": "stat -json -liberty /mnt/a/ImpSec/unrail/synthesis/NangateOpenCellLibrary_functional.lib unrail_module ",
+   "modules": {
+      "\\unrail_module": {
+         "num_wires":         27183,
+         "num_wire_bits":     43513,
+         "num_pub_wires":     26130,
+         "num_pub_wire_bits": 42460,
+         "num_ports":         20,
+         "num_port_bits":     239,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         11836,
+         "num_submodules":       0,
+         "area":              9139.760000,
+         "sequential_area":    4761.666000,
+         "num_cells_by_type": {
+            "$scopeinfo": 6292,
+            "AOI22_X1": 436,
+            "DFF_X1": 1053,
+            "INV_X1": 904,
+            "NAND2_X1": 507,
+            "NAND3_X1": 936,
+            "NAND4_X1": 234,
+            "NOR2_X1": 936,
+            "XNOR2_X1": 117,
+            "XOR2_X1": 421
+         }
+      }
+   }
+
+}
+
