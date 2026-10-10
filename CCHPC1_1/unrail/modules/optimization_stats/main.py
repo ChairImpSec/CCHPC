@@ -68,6 +68,8 @@ class OptimizationStats:
           instance_depth += 1;
         elif mode == CircuitDepthMode.GATE_LEVEL:
           instance_depth += instance.config["critical_path"]["single_rail"] if instance.optimized else instance.config["critical_path"]["dual_rail"];
+      elif instance.type == InstanceType.MAPPING and mode == CircuitDepthMode.GATE_LEVEL and get_args().duality:
+        instance_depth += Config.get_config()["duality"]["merge_critical_path"];
       
       new_depth = max([OptimizationStats.__get_circuit_depth(wire, instance_depth, mode, ignore_registers) for wire in instance.outputs.values()]);
       if new_depth > max_depth:

@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Callable
 from model.graph.types.instance_type import InstanceType
 from config.main import Config
+from model.graph.types.randombit_vector import RandomBitVector
 if TYPE_CHECKING:
   from model.graph.wire import Wire
 
@@ -10,7 +11,7 @@ class Instance:
         self.reverseInputs: dict["Wire", str] = {};
         self.reverseOutputs: dict["Wire", str] = {};
         self.randomBitCount = 0
-        self.randomBitName = None;
+        self.randomBitName: RandomBitVector = {"sr": None, "dr": None};
         self.configBits: dict[str, str] = {};
         self.additionalConnections: dict[str, str] = {};
         
@@ -53,7 +54,8 @@ class Instance:
                 config_bits = module["verilog_output"]["config_bits"];
             self.configBits = {bit["name"]: bit["value"] for bit in config_bits};
             if "random_bits" in module["verilog_output"]:
-                self.randomBitName = module["verilog_output"]["random_bits"]["name"];
+                self.randomBitName["sr"] = module["verilog_output"]["random_bits"]["single_rail_name"];
+                self.randomBitName["dr"] = module["verilog_output"]["random_bits"]["dual_rail_name"];
                 self.randomBitCount = module["verilog_output"]["random_bits"]["count"];
 
         if self.type == InstanceType.INVERSION or self.type == InstanceType.LINEAR:
@@ -200,8 +202,11 @@ class Instance:
             if name in self.outputs:
                 errors.append(f"[Instance] {self.name} has an input and output named {name}");
 
-        if self.randomBitCount > 0 and (self.randomBitName in self.inputs or self.randomBitName in self.outputs or self.randomBitName in self.additionalConnections):
-            errors.append(f"[Instance] {self.name} requires a random bit vector but the reserved name '{self.randomBitName}' is already in use");
+        if self.randomBitCount > 0 and (self.randomBitName["sr"] in self.inputs or self.randomBitName["sr"] in self.outputs or self.randomBitName["sr"] in self.additionalConnections):
+            errors.append(f"[Instance] {self.name} requires a random bit vector but the single-rail reserved name '{self.randomBitName["sr"]}' is already in use");
+
+        if self.randomBitCount > 0 and (self.randomBitName["dr"] in self.inputs or self.randomBitName["dr"] in self.outputs or self.randomBitName["dr"] in self.additionalConnections):
+            errors.append(f"[Instance] {self.name} requires a random bit vector but the dual-rail reserved name '{self.randomBitName["dr"]}' is already in use");
 
         if self.optimized and self.type not in [InstanceType.LINEAR, InstanceType.INVERSION, InstanceType.NON_LINEAR, InstanceType.REGISTER, InstanceType.MAPPING]:
             errors.append(f"[Instance] {self.name} is optimized but has an unsupported type {self.type}");
@@ -214,20 +219,27 @@ class Instance:
 
         return True;
 
-    def _get_connections(self, clock_wire: str, precharge_wire: str, randomBitVector: str | None = None) -> list[tuple[str, str]]:
+    def _get_connections(self, clock_wire: str, precharge_wire: str, randomBitVector: dict[str, str] | None = None) -> list[tuple[str, str]]:
         connections: list[tuple[str, str]] = [];
         connections.extend([(name, wire.name) for name, wire in self.inputs.items()]);
         if randomBitVector is not None:
-            connections.append((self.randomBitName, randomBitVector));
+            connections.append((self.randomBitName["sr"], randomBitVector["sr"]));
+            if "dr" in randomBitVector:
+                connections.append((self.randomBitName["dr"], randomBitVector["dr"]));
         if self.config.get("clock_wire", None) is not None:
             connections.append((self.config["clock_wire"], clock_wire));
         if self.config.get("precharge_wire", None) is not None:
             connections.append((self.config["precharge_wire"], precharge_wire));
         connections.extend([(name, wire) for name, wire in self.additionalConnections.items()]);
-        connections.extend([(name, wire.name) for name, wire in self.outputs.items()]);
+        connections.extend([(self._get_output_port_name(name), wire.name) for name, wire in self.outputs.items()]);
         return connections;
 
-    def print(self, clock_wire: str, precharge_wire: str, randomBitGetter: Callable[[int], str]) -> str:
+    def _get_output_port_name(self, name: str) -> str:
+        if self.type == InstanceType.NON_LINEAR and self.optimized:
+            return f"{name}{Config.get_config()["single_rail_output_suffix"]}";
+        return name;
+
+    def print(self, clock_wire: str, precharge_wire: str, randomBitGetter: Callable[[int, bool], dict[str, str]]) -> str:
         if self.type == InstanceType.MAPPING:
             # Mapping module is only used for DR to SR mapping and is not an actual verilog module so we print a generate block for the wire mapping here
             INDENT_STRING = "    ";
@@ -239,8 +251,97 @@ class Instance:
                     f"{INDENT_STRING * 2}end\n"
                     f"{INDENT_STRING}endgenerate");
 
-        randomBitVector = randomBitGetter(self.randomBitCount) if self.randomBitCount > 0 else None;
-        return f"{self.config["verilog_output"]["single_rail_module"] if self.optimized else self.config["verilog_output"]["dual_rail_module"]}{f" #({','.join([f".{name}({value})" for name, value in self.configBits.items()])})" if len(self.configBits) > 0 else ""} {self.name} ({", ".join([f".{name}({wire})" for name, wire in self._get_connections(clock_wire, precharge_wire, randomBitVector)])});";
+        randomBitVector = randomBitGetter(self.randomBitCount, self.optimized) if self.randomBitCount > 0 else None;
+        return self._format_module(self.config["verilog_output"]["single_rail_module"] if self.optimized else self.config["verilog_output"]["dual_rail_module"], self._get_connections(clock_wire, precharge_wire, randomBitVector));
+
+    def _format_module(self, module_name: str, connections: list[tuple[str, str]]) -> str:
+        return f"{module_name}{f" #({','.join([f".{name}({value})" for name, value in self.configBits.items()])})" if len(self.configBits) > 0 else ""} {self.name} ({", ".join([f".{name}({wire})" for name, wire in connections])});";
+
+    @staticmethod
+    def get_duality_rails(wire_name: str) -> tuple[str, str, str]:
+        """
+        A dual-rail wire in duality mode is packed as [4*(d-1):0] = {duality1, duality0, layer0}
+        with duality0 = [2*(d-1):1] and duality1 = [4*(d-1):2*(d-1)+1], both in interleaved rail format {..., f, t}
+        """
+        return (f"{wire_name}[0]", f"{wire_name}[2*(d-1):1]", f"{wire_name}[4*(d-1):2*(d-1)+1]");
+
+    def _get_duality_rail_connections(self, port_name: str, wire_name: str) -> list[tuple[str, str]]:
+        suffixes = Config.get_config()["duality"]["port_suffixes"];
+        layer0, duality0, duality1 = Instance.get_duality_rails(wire_name);
+        return [
+            (f"{port_name}{suffixes["layer0"]}", layer0),
+            (f"{port_name}{suffixes["duality0"]}", duality0),
+            (f"{port_name}{suffixes["duality1"]}", duality1),
+        ];
+
+    def print_duality(self, clock_wire: str, precharge_wires: list[str], randomBitGetter: Callable[[int, bool], dict[str, str]]) -> str:
+        INDENT_STRING = "    ";
+        duality_config = Config.get_config()["duality"];
+
+        if self.type == InstanceType.MAPPING:
+            # The false rail of the pre-charged duality instance is 0, so NOR-merging both false rails restores the single-rail share
+            input_wire = self.get_inputs()[0];
+            output_wire = self.get_outputs()[0];
+            return (f"generate\n"
+                    f"{INDENT_STRING * 2}for (i = 0; i < d; i=i+1) begin : loop_DRtSR_duality_mapping_{self.name}\n"
+                    f"{INDENT_STRING * 3}if (i == 0) begin : gen_layer0\n"
+                    f"{INDENT_STRING * 4}assign {output_wire.name}[i] = {input_wire.name}[0];\n"
+                    f"{INDENT_STRING * 3}end else begin : gen_merge\n"
+                    f"{INDENT_STRING * 4}{duality_config["merge_module"]} merge_inst (.a({input_wire.name}[2*i]), .b({input_wire.name}[2*(d-1)+2*i]), .z({output_wire.name}[i]));\n"
+                    f"{INDENT_STRING * 3}end\n"
+                    f"{INDENT_STRING * 2}end\n"
+                    f"{INDENT_STRING}endgenerate");
+
+        if self.type == InstanceType.INVERSION and not self.optimized:
+            # There is no duality inversion gadget, so the inversion is done by swapping the rails of the last share in both duality instances
+            input_wire = self.get_inputs()[0];
+            output_wire = self.get_outputs()[0];
+            if self.get_config("INV") == "1'b1":
+                return f"assign {output_wire.name} = {input_wire.name};";
+            return (f"generate\n"
+                    f"{INDENT_STRING * 2}for (i = 0; i <= 4*(d-1); i=i+1) begin : loop_duality_not_{self.name}\n"
+                    f"{INDENT_STRING * 3}assign {output_wire.name}[i] = {input_wire.name}[(i == 2*(d-1) || i == 4*(d-1)) ? i-1 : (i == 2*(d-1)-1 || i == 4*(d-1)-1) ? i+1 : i];\n"
+                    f"{INDENT_STRING * 2}end\n"
+                    f"{INDENT_STRING}endgenerate");
+
+        if self.optimized and self.type in [InstanceType.LINEAR, InstanceType.INVERSION, InstanceType.REGISTER]:
+            # Single-rail only gadgets are not affected by duality (the precharge input of single-rail registers is unused)
+            return self.print(clock_wire, precharge_wires[0], None);
+
+        module_key = "duality_single_rail_module" if self.optimized else "duality_dual_rail_module";
+        if module_key not in self.config["verilog_output"]:
+            raise ValueError(f"[Instance] {self.name} ({self.moduleName}) has no '{module_key}' configured, which is required for duality output");
+
+        connections: list[tuple[str, str]] = [];
+        for name, wire in self.inputs.items():
+            if self.type == InstanceType.REGISTER:
+                connections.append((name, wire.name));
+            else:
+                connections.extend(self._get_duality_rail_connections(name, wire.name));
+
+        if self.randomBitCount > 0:
+            randomBitVector = randomBitGetter(self.randomBitCount, self.optimized);
+            connections.append((self.randomBitName["sr"], randomBitVector["sr"]));
+            if not self.optimized:
+                dr0_name, dr1_name = self.config["verilog_output"]["random_bits"]["duality_dual_rail_names"];
+                connections.append((dr0_name, randomBitVector["dr0"]));
+                connections.append((dr1_name, randomBitVector["dr1"]));
+
+        if self.config.get("clock_wire", None) is not None:
+            connections.append((self.config["clock_wire"], clock_wire));
+        if self.config.get("precharge_wire", None) is not None:
+            if self.config.get("duality_precharge_wires", None) is None:
+                raise ValueError(f"[Instance] {self.name} ({self.moduleName}) has no 'duality_precharge_wires' configured, which is required for duality output");
+            connections.extend(zip(self.config["duality_precharge_wires"], precharge_wires));
+        connections.extend([(name, wire) for name, wire in self.additionalConnections.items()]);
+
+        for name, wire in self.outputs.items():
+            if self.optimized:
+                connections.append((self._get_output_port_name(name), wire.name));
+            else:
+                connections.extend(self._get_duality_rail_connections(name, wire.name));
+
+        return self._format_module(self.config["verilog_output"][module_key], connections);
 
     def __repr__(self) -> str:
         return f"Instance(name={self.name}, type={self.type}, valid={self.check(quiet=True)}, moduleName={self.moduleName}, clockWire={self.clockWire}, prechargeWire={self.prechargeWire}, randomBitCount={self.randomBitCount}, inputs={', '.join([f"{name}: {wire.name}" for name, wire in self.inputs.items()])}, outputs={', '.join([f"{name}: {wire.name}" for name, wire in self.outputs.items()])}, additionalConnections={', '.join([f"{name} -> {wire.name}" for name, wire in self.additionalConnections])}, configBits={', '.join([f"{name}: {value}" for name, value in self.configBits.items()])})";

@@ -23,6 +23,7 @@ def get_args() -> argparse.Namespace:
   parser.add_argument("--disable-f2b", action="store_true", default=False, help="Disable the front to back optimization (No register stage will be placed, Input will be in Dual Rail)");
   parser.add_argument("--disable-b2f", action="store_true", default=False, help="Disable the back to front optimization (Output will be in Dual Rail)");
   parser.add_argument("--debug-f2b", action="store_true", default=False, help="Open interactive debug window for the front to back optimization during the run");
+  parser.add_argument("--duality", action="store_true", default=False, help="Output the dual-rail part of the circuit with duality gadgets (two pre-charged dual-rail instances driven by separate precharge signals)");
 
   _args = parser.parse_args();
   return _args;

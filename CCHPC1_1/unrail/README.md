@@ -17,7 +17,7 @@ An optimization framework to reduce area of masked implementations with composab
 ## Usage
 
 ```sh
-python main.py [-h] -f Path -o Path [-c Path] [--disable-f2b] [--disable-b2f] [--debug-f2b]
+python main.py [-h] -f Path -o Path [-c Path] [--disable-f2b] [--disable-b2f] [--debug-f2b] [--duality]
 ```
 
 **Note:** Disabling one or both algorithms (Front-to-Back c.f. Section 5.1.2 or Back-to-Front c.f. Section 5.1.1) does no longer guarantee optimal results and should be treated as a debug option to explore the effects of the algorithms.
@@ -33,6 +33,11 @@ Parameters:
 | `--disable-f2b` | n/a        | Disable Front-to-Back optimizations                           |
 | `--disable-b2f` | n/a        | Disable Back-to-Front optimizations                           |
 | `--debug-f2b`   | n/a        | Open interactive debug window to see min-st-cut results       |
+| `--duality`     | n/a        | Output the dual-rail part of the circuit with duality gadgets |
+
+The randomness is split into `<r>_sr` and `<r>_dr` for gadgets with dual-rail output and `<r>_sr_drtsr` (`d(d-1)/2` single-rail bits per gadget) for dual-rail to single-rail gadgets.
+
+In duality mode, every dual-rail wire is packed as `[4*(d-1):0] = {duality1, duality0, layer0}` (`layer0` = `[0]`, `duality0` = `[2*(d-1):1]`, `duality1` = `[4*(d-1):2*(d-1)+1]`), the precharge input is split into `<prch>0` and `<prch>1`, and `<r>_dr` is split into `<r>_dr0` and `<r>_dr1` (one per duality instance).
 
 ## Config
 
@@ -178,9 +183,12 @@ You can find example S-box designs in the `/examples` folder. Results from our r
 
 ## S-box Testbench
 
-You can find the testbench we used to verify the correctness of generated verilog results in the `/testbench` folder.
-Along the testbench file `/testbench/aes_sbox_tb.v` we included dummy implementations of the CCHPC1.1 gadgets in the file `/testbench/tb_modules.v`.
-We used Vivado 2025.2 for simulation.
+You can find the testbenches we used to verify the correctness of generated verilog results in the `/testbench` folder:
+`/testbench/aes_sbox_tb.v` for normal output and `/testbench/aes_sbox_duality_tb.v` for output generated with `--duality`.
+Along the testbenches we included simulation-only dummy implementations of the CCHPC1.1 gadgets (normal and duality) in the file `/testbench/tb_modules.v`.
+The dummies have the exact interfaces of the gadgets in `/cchpc_rtl`, but are combinational and compute on the real share encoding, so the testbenches drive random input sharings and randomness (and both duality phases) and check the output reconstructed from all shares.
+Configure the testbench parameters (`security_order`, `random_bit_count_dr`, `random_bit_count_drtsr`, `disable_f2b`, `disable_b2f`, `inverse`) according to the header of the generated `optimized.v`.
+We used Vivado 2025.2 for simulation, the testbenches also run with Icarus Verilog (`iverilog -g2005`).
 
 The testbench works for all existing examples in the examples folder (excluding the testcases).
 Little-Endian and Big-Endian notation has been accounted for in the $\mathsf{Unrail}$ files with the order of input and output wires.

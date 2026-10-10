@@ -15,6 +15,18 @@ inline_modules:
   NOT:
     map_to: NOT
 
+single_rail_output_suffix: _SR
+
+# Port naming of the duality gadgets (--duality)
+# A dual-rail port <name> is split into <name><layer0>, <name><duality0> and <name><duality1>
+duality:
+  port_suffixes:
+    layer0: _layer0
+    duality0: _duality0
+    duality1: _duality1
+  merge_module: NOR2
+  merge_critical_path: 1
+
 modules:
   XOR2:
     type: linear
@@ -30,8 +42,9 @@ modules:
       single_rail: 2
       dual_rail: 4
     verilog_output:
-      single_rail_module: linear_CCHPC1_1_SRtSR
-      dual_rail_module: linear_CCHPC1_1_DRtDR
+      single_rail_module: linear_CCHPC1_1_generic_SRtSR
+      dual_rail_module: linear_CCHPC1_1_generic_DRtDR
+      duality_dual_rail_module: linear_CCHPC1_1_generic_DRtDR_duality
       config_bits:
         - name: CONF
           value: 1'b0
@@ -49,8 +62,9 @@ modules:
       single_rail: 2
       dual_rail: 4
     verilog_output:
-      single_rail_module: linear_CCHPC1_1_SRtSR
-      dual_rail_module: linear_CCHPC1_1_DRtDR
+      single_rail_module: linear_CCHPC1_1_generic_SRtSR
+      dual_rail_module: linear_CCHPC1_1_generic_DRtDR
+      duality_dual_rail_module: linear_CCHPC1_1_generic_DRtDR_duality
       config_bits:
         - name: CONF
           value: 1'b1
@@ -63,6 +77,9 @@ modules:
       - z
     clock_wire: clk
     precharge_wire: prch
+    duality_precharge_wires:
+      - prch0
+      - prch1
     cost:
       single_rail: 34048 # 34.048
       dual_rail: 66766 # 66.766
@@ -70,13 +87,19 @@ modules:
       single_rail: 4
       dual_rail: 4
     verilog_output:
-      single_rail_module: nonlinear_CCHPC1_1_DRtSR
-      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR
+      duality_single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR_duality
+      duality_dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR_duality
       config_bits:
         - name: CONF
           value: 2'h0
       random_bits:
-        name: r
+        single_rail_name: r_SR
+        dual_rail_name: r_DR
+        duality_dual_rail_names:
+          - r_duality0
+          - r_duality1
         count: 1
   NAND2:
     type: non-linear
@@ -87,6 +110,9 @@ modules:
       - z
     clock_wire: clk
     precharge_wire: prch
+    duality_precharge_wires:
+      - prch0
+      - prch1
     cost:
       single_rail: 34048 # 34.048
       dual_rail: 66766 # 66.766
@@ -94,13 +120,19 @@ modules:
       single_rail: 4
       dual_rail: 4
     verilog_output:
-      single_rail_module: nonlinear_CCHPC1_1_DRtSR
-      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR
+      duality_single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR_duality
+      duality_dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR_duality
       config_bits:
         - name: CONF
           value: 2'h1
       random_bits:
-        name: r
+        single_rail_name: r_SR
+        dual_rail_name: r_DR
+        duality_dual_rail_names:
+          - r_duality0
+          - r_duality1
         count: 1
   OR2:
     type: non-linear
@@ -111,6 +143,9 @@ modules:
       - z
     clock_wire: clk
     precharge_wire: prch
+    duality_precharge_wires:
+      - prch0
+      - prch1
     cost:
       single_rail: 34048 # 34.048
       dual_rail: 66766 # 66.766
@@ -118,13 +153,19 @@ modules:
       single_rail: 4
       dual_rail: 4
     verilog_output:
-      single_rail_module: nonlinear_CCHPC1_1_DRtSR
-      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR
+      duality_single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR_duality
+      duality_dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR_duality
       config_bits:
         - name: CONF
           value: 2'h3
       random_bits:
-        name: r
+        single_rail_name: r_SR
+        dual_rail_name: r_DR
+        duality_dual_rail_names:
+          - r_duality0
+          - r_duality1
         count: 1
   NOR2:
     type: non-linear
@@ -135,6 +176,9 @@ modules:
       - z
     clock_wire: clk
     precharge_wire: prch
+    duality_precharge_wires:
+      - prch0
+      - prch1
     cost:
       single_rail: 34048 # 34.048
       dual_rail: 66766 # 66.766
@@ -142,13 +186,19 @@ modules:
       single_rail: 4
       dual_rail: 4
     verilog_output:
-      single_rail_module: nonlinear_CCHPC1_1_DRtSR
-      dual_rail_module: nonlinear_CCHPC1_1_DRtDR
+      single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR
+      dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR
+      duality_single_rail_module: nonlinear_CCHPC1_1_generic_DRtSR_duality
+      duality_dual_rail_module: nonlinear_CCHPC1_1_generic_DRtDR_duality
       config_bits:
         - name: CONF
           value: 2'h2
       random_bits:
-        name: r
+        single_rail_name: r_SR
+        dual_rail_name: r_DR
+        duality_dual_rail_names:
+          - r_duality0
+          - r_duality1
         count: 1
   NOT:
     type: inversion
@@ -163,17 +213,21 @@ modules:
       single_rail: 1
       dual_rail: 0
     verilog_output:
-      single_rail_module: NOT_CCHPC1_1_SRtSR
-      dual_rail_module: NOT_CCHPC1_1_DRtDR
+      single_rail_module: not_CCHPC1_1_generic_SRtSR
+      dual_rail_module: not_CCHPC1_1_generic_DRtDR
 
 register:
   input: a
   output: z
   clock_wire: clk
   precharge_wire: prch
+  duality_precharge_wires:
+    - prch0
+    - prch1
   cost:
     single_rail: 4522 # 4.522
     dual_rail: 15694 # 15.694
   verilog_output:
-    single_rail_module: REG_SRtSR
-    dual_rail_module: REG_SRtDR
+    single_rail_module: reg_SRtSR_generic
+    dual_rail_module: reg_SRtDR_generic
+    duality_dual_rail_module: reg_SRtDR_generic_duality

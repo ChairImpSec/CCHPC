@@ -5,6 +5,7 @@ from model.graph.vector import Vector
 from model.graph.instance import Instance
 from model.graph.types.instance_type import InstanceType
 from model.graph.helpers.check import traverse_instance
+from args import get_args
 
 class Graph:
   @staticmethod
@@ -22,19 +23,7 @@ class Graph:
     self.__last_id = -1;
     self.clock_wire: str | None = None;
     self.precharge_wire: str | None = None;
-    self.randomness_wire: str | None = None;
-
-  def set_clock_wire(self, clock_wire: str) -> "Graph":
-    self.clock_wire = clock_wire;
-    return self;
-
-  def set_precharge_wire(self, precharge_wire: str) -> "Graph":
-    self.precharge_wire = precharge_wire;
-    return self;
-
-  def set_randomness_wire(self, randomness_wire: str) -> "Graph":
-    self.randomness_wire = randomness_wire;
-    return self;
+    self.randomness_wire: {"sr": str | None, "dr": str | None} = {"sr": None, "dr": None};
 
   def add_instance(self, instance: "Instance") -> "Graph":
     if instance.name in self.instances:
@@ -156,11 +145,35 @@ class Graph:
     del self.wires[wire.name];
     return self;
 
+  def get_duality_precharge_wires(self) -> list[str] | None:
+    if self.precharge_wire is None:
+      return None;
+    return [f"{self.precharge_wire}0", f"{self.precharge_wire}1"];
+
+  def get_randomness_pools(self, duality: bool) -> tuple[dict[str, str], dict[str, str]] | None:
+    """
+    Returns the randomness vectors for (gadgets with dual-rail output, gadgets with single-rail output)
+    """
+    if self.randomness_wire["sr"] is None or self.randomness_wire["dr"] is None:
+      return None;
+    if duality:
+      dual_rail_output_pool = {"sr": self.randomness_wire["sr"], "dr0": f"{self.randomness_wire["dr"]}0", "dr1": f"{self.randomness_wire["dr"]}1"};
+    else:
+      dual_rail_output_pool = {"sr": self.randomness_wire["sr"], "dr": self.randomness_wire["dr"]};
+    single_rail_output_pool = {"sr": f"{self.randomness_wire["sr"]}_drtsr"};
+    return dual_rail_output_pool, single_rail_output_pool;
+
   def _is_name_reserved(self, name: str) -> bool:
-    full_name_reserved = name == self.clock_wire or name == self.precharge_wire or name == self.randomness_wire;
+    reserved_names = [self.clock_wire, self.precharge_wire, self.randomness_wire["sr"], self.randomness_wire["dr"]];
+    duality = get_args().duality;
+    if duality:
+      reserved_names.extend(self.get_duality_precharge_wires() or []);
+    for pool in self.get_randomness_pools(duality) or ():
+      reserved_names.extend(pool.values());
+    reserved_names = [reserved_name for reserved_name in reserved_names if reserved_name is not None];
+
     base_name, _ = Graph.get_wire_composition(name);
-    base_name_reserved = base_name == self.clock_wire or base_name == self.precharge_wire or base_name == self.randomness_wire;
-    return full_name_reserved or base_name_reserved;
+    return name in reserved_names or base_name in reserved_names;
 
   """
   Get all vectors and wires that are not already part of a vector
@@ -195,8 +208,10 @@ class Graph:
       errors.append(f"[Graph] Clock wire is not set");
     if self.precharge_wire is None:
       errors.append(f"[Graph] Precharge wire is not set");
-    if self.randomness_wire is None:
-      errors.append(f"[Graph] Randomness wire is not set");
+    if self.randomness_wire["sr"] is None:
+      errors.append(f"[Graph] Single-rail randomness wire is not set");
+    if self.randomness_wire["dr"] is None:
+      errors.append(f"[Graph] Dual-rail randomness wire is not set");
 
     for instance in self.instances.values():
       if not instance.check(quiet=quiet):

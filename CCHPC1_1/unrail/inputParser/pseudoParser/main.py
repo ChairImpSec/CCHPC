@@ -54,10 +54,11 @@ def parse_pseudo_file(file_path: str) -> "Graph":
 
                     # Singular input for randomness signals
                     case "randomness":
-                        if graph.randomness_wire is None or graph.randomness_wire == name:
-                            graph.randomness_wire = name;
+                        if (graph.randomness_wire["sr"] is None or graph.randomness_wire["sr"] == name) and (graph.randomness_wire["dr"] is None or graph.randomness_wire["dr"] == name):
+                            graph.randomness_wire["sr"] = name + "_sr";
+                            graph.randomness_wire["dr"] = name + "_dr";
                         else:
-                            raise ValueError(f"[PseudoParser]#{line_number} Multiple randomness wires found: {graph.randomness_wire} and {name}");
+                            raise ValueError(f"[PseudoParser]#{line_number} Multiple randomness wire prefixes found. {name} cannot be set.");
 
                     # Invalid input type
                     case _:
