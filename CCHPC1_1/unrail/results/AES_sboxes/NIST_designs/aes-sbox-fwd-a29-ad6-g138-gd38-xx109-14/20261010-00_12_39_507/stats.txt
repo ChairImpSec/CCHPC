@@ -1,0 +1,8 @@
+The GE-values used to calculate these stats are for 2 shares
+Gadget level crit. depth (no registers / with registers): 38 / 38
+Gate level crit. depth (no registers / with registers): 152 / 152
+Unoptimized cost (no registers / with registers): 2516094 / 2641646
+Optimized cost (no registers / with registers): 2516094 / 2641646
+Percentage gain (no registers / with registers): 0.0% / 0.0%
+Optimized instances (linear): 0 of 109
+Optimized instances (non-linear): 0 of 29
