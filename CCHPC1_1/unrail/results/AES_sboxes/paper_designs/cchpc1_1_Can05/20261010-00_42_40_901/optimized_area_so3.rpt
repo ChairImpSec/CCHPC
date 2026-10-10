@@ -1,0 +1,8 @@
+==================== Area Report ====================
+Design         : /mnt/a/ImpSec/unrail/results/AES_sboxes/paper_designs/cchpc1_1_Can05/20261010-00_42_40_901/optimized.v
+Top module     : unrail_module
+Security order : 3
+Library        : NangateOpenCellLibrary_functional.lib (1 GE = NAND2_X1 = 0.798 um^2)
+Area           : 40273.464 um^2
+Area           : 50468.00 GE
+=====================================================
