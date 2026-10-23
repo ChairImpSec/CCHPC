@@ -196,10 +196,31 @@ Little-Endian and Big-Endian notation has been accounted for in the $\mathsf{Unr
 ## Results
 
 The results folder contains the results we used for the paper and covers all example S-boxes we provide in the examples folder.
-All examples were computed with and without the optimizations.
-Folders containing `graph_b2f_optimized.pdf` and `graph_f2b_optimized.pdf` contain the optimizations, the others are simply a conversion from $\mathsf{Unrail}$ file format into verilog without the Front-to-Back (c.f. Section 5.1.2) and Back-to-Front (c.f. Section 5.1.1) optimizations.
+It mirrors the structure of `/examples`: every example `examples/AES_sboxes/<group>/<design>.unrail` (with `<group>` being `paper_designs` or `NIST_designs`) has a folder `results/AES_sboxes/<group>/<design>/`, which contains one timestamped subfolder (`YYYYMMDD-HH_MM_SS_mmm`) per run.
 
-The `stats.txt` includes useful statistics about the resulting graph and a coarse expected area estimate (Note that the area estimate / 1000 estimates Gate Equivalents).
+Every example was computed in four configurations, in this (chronological) order:
+
+1. With optimizations
+2. Without optimizations (`--disable-f2b --disable-b2f`)
+3. With optimizations and duality (`--duality`)
+4. Without optimizations and with duality (`--duality --disable-f2b --disable-b2f`)
+
+The runs without optimizations are simply a conversion from $\mathsf{Unrail}$ file format into verilog without the Front-to-Back (c.f. Section 5.1.2) and Back-to-Front (c.f. Section 5.1.1) optimizations; they can be recognized by the missing `graph_b2f_optimized.pdf` and `graph_f2b_optimized.pdf`.
+The header of each `optimized.v` states the exact configuration of the run (F2B, B2F, duality and the random bit counts needed for the testbench).
+
+Each run folder contains the following files:
+
+| File                                          | Description                                                                                                 |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `optimized.v`                                 | Generated verilog netlist of the S-box using the CCHPC1.1 gadgets                                           |
+| `stats.txt`                                   | Statistics about the resulting graph (critical depths, optimized instances) and a coarse area estimate      |
+| `graph_*.pdf`                                 | Visualizations of the circuit at different stages of the program (see below)                               |
+| `optimized_area_so<n>.rpt`                    | Area report (in µm² and GE) of the Yosys synthesis of `optimized.v` for security order `n` (1, 2 and 3)    |
+| `optimized_area_so<n>_stat.json`              | Detailed Yosys `stat` output (cell counts by type, sequential area) for security order `n`                 |
+| `synthesized_so<n>.v`                         | Flattened gate-level netlist resulting from the synthesis for security order `n`                           |
+
+The area estimate in `stats.txt` is computed from the gadget costs in the config (Note that the area estimate / 1000 estimates Gate Equivalents).
+The synthesis results are produced with `synthesis/synth.sh`, which synthesizes `optimized.v` together with the gadgets in `/synthesis/gadgets` onto the NanGate 45nm Open Cell Library using Yosys (1 GE = area of `NAND2_X1` = 0.798 µm²).
 
 The included pdf files visualize the circuit at different stages of the program. The order of creation is as follows:
 
@@ -207,6 +228,7 @@ The included pdf files visualize the circuit at different stages of the program.
 2. `graph_inversion_merged.pdf` (NOT operations have been merged into surrounding gadgets)
 3. `graph_b2f_optimized.pdf` (The Back-to-Front algorithm (c.f. Section 5.1.1) has been applied)
 4. `graph_f2b_optimized.pdf` (The Front-to-Back algorithm (c.f. Section 5.1.2) has been applied)
+5. `graph_rail_mapped.pdf` (Dual-rail to single-rail mappers have been inserted where a dual-rail wire feeds a single-rail gadget)
 
 Depending on the cli flags, some files are missing when the step where they generate is disabled.
 
@@ -229,3 +251,4 @@ The graphs follow the following color notation:
 ### Regenerating results
 
 To regenerate the results with $\mathsf{Unrail}$, you can execute the provided `regenerate_results.sh` script in the provided pixi shell environment.
+The script deletes the current contents of `/results`, runs all examples in `/examples/AES_sboxes` in the four configurations listed above and synthesizes every run for security orders 1, 2 and 3, printing the resulting area in GE.
