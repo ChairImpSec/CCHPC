@@ -2,6 +2,9 @@
 
 This directory contains generic RTL implementations of the **CCHPC1.1** linear and non-linear gadgets, including duality/duality+ variants and the corresponding BP-improved AES S-box and looped AES examples.
 
+We used Vivado 2022.1.2 to simulate the designs. Create a Vivado project and add all design and simulation sources. Set the desired testbench as the top module and run the simulation. Each testbench includes one or more testvectors to verify correct computation.
+Due to the nature of the CCHPC1.1 scheme, layers are executed/evaluated in consecutive clock cycles.
+
 ## Files
 
 | File / group | Purpose |
@@ -27,9 +30,9 @@ This directory contains generic RTL implementations of the **CCHPC1.1** linear a
 | `CONF` | Selects AND/NAND/NOR/OR functionality of the generic non-linear gadget. |
 | `DUALITY` | Selects regular or duality implementation in the generic testbench. |
 | `OUT_DR` | Selects the two non-linear gadget variants from Section 4.1.2. **`1` = CCHPC1.1-AND (`DRtDR`)**, with dual-rail outputs for `l > 0`. **`0` = CCHPC1.1-AND-DR2SR (`DRtSR`)**, with a single retained rail for `l > 0`. |
-| `FORWARD_R` | **`0` = construction from Section 4.1.2.** `1` enables a forwarding optimization. For security orders greater than one, it slightly reduces the area of the `DRtDR` variants and avoids the usual chaining in all non-final layers. Their output shares are assigned directly from the corresponding fresh-randomness contribution, while the previous layer result is forwarded into the next layer's last MTG. This is similar to the random-share structure used by LMDPL [SBHM20], although LMDPL itself is limited to first-order security. |
+| `FORWARD_R` | **`0` = construction from Section 4.1.2.** `1` enables a forwarding optimization. For security orders greater than one, it slightly reduces the area of the `DRtDR` variants and avoids the usual chaining in all non-final layers. Their output shares are assigned directly from the corresponding fresh-randomness contribution, while the previous layer result is forwarded into the next layer's last MTG. This is similar to the random-share structure used by LMDPL [\[SBHM20\]](https://eprint.iacr.org/2020/051), although LMDPL itself is limited to first-order security. |
 | `wRandCONV` | Uses variants that convert the required fresh randomness from single rail to DRP internally. If disabled, the `DRtDR` variants expect the required dual-rail randomness to be provided externally and correctly phase-aligned/pre-charged. |
-| `RAND_REG` | Forces fresh randomness through a register stage. This can be useful when required by the chosen PRNG integration, e.g., unrolled Trivium [CMM+24]. |
+| `RAND_REG` | Forces fresh randomness through a register stage. This can be useful when required by the chosen PRNG integration, e.g., unrolled Trivium [\[CMM+24\]](https://doi.org/10.62056/akdkp2fgx). |
 | `OPT_PRCH` | Uses the combined SR-to-DR conversion/pre-charge implementation with `prch`/`prch_n`. This can reduce conversion/pre-charge area depending on synthesis. |
 | `PRCHN_PROVIDED` (for `*_wPRCHn` modules) | Uses externally provided `prch_n` signals instead of regenerating them inside each gadget. Relevant together with `OPT_PRCH`. |
 | `ALIGN_OUT` | Delays earlier output shares so that all shares are aligned to the final gadget layer. |
@@ -56,6 +59,6 @@ The reference module families are `nonlinear_CCHPC1_1_generic_DRtDR`, `nonlinear
 
 ## References
 
-[SBHM20] P. Sasdrich, B. Bilgin, M. Hutter, and M. E. Marson, *Low-Latency Hardware Masking with Application to AES*, IACR TCHES 2020(2), 300–326. [IACR ePrint 2020/051](https://eprint.iacr.org/2020/051).
+\[SBHM20\] Pascal Sasdrich, Begül Bilgin, Michael Hutter, and Mark Marson. [Low-Latency Hardware Masking with Application to AES](https://eprint.iacr.org/2020/051). *IACR Transactions on Cryptographic Hardware and Embedded Systems*, 2020(2), 300–326.
 
-[CMM+24] G. Cassiers, L. Masure, C. Momin, T. Moos, A. Moradi, and F.-X. Standaert, *Randomness Generation for Secure Hardware Masking - Unrolled Trivium to the Rescue*, IACR Communications in Cryptology, 1(2):4, 2024.
+\[CMM+24\] Gaëtan Cassiers, Loïc Masure, Charles Momin, Thorben Moos, Amir Moradi, and François-Xavier Standaert. [Randomness Generation for Secure Hardware Masking – Unrolled Trivium to the Rescue](https://doi.org/10.62056/akdkp2fgx). *IACR Communications in Cryptology*, 1(2):4, 2024.
