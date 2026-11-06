@@ -2,8 +2,6 @@
 
 This repository contains the artifacts accompanying the papers on the original [CCHPC1](CCHPC1/) \[LMDM25\] and its follow-up [CCHPC1.1](CCHPC1_1/) \[LWM26\] with architectural improvements. See the respective subfolder READMEs for details.
 
-Each contribution includes its own GNU GPLv3 license and copyright notice: [CCHPC1](CCHPC1/LICENSE) and [CCHPC1.1](CCHPC1_1/LICENSE).
-
 ## References
 
 \[LMDM25\] Daniel Lammers, Nicolai Müller, Siemen Dhooghe, and Amir Moradi. [Constant-Cycle Hardware Private Circuits](https://eprint.iacr.org/2025/1331). *IACR Transactions on Cryptographic Hardware and Embedded Systems*, 2025(4).

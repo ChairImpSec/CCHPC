@@ -1,6 +1,6 @@
 # Area Efficiency in Constant-Cycle Schemes
 
-This repository complements the work published in [Area Efficiency in Constant-Cycle Schemes - CCHPC1.1 and Architectural Overhead Reduction Applied to AES](). It provides the following contents:
+This repository complements the work published in [Area Efficiency in Constant-Cycle Schemes - CCHPC1.1 and Architectural Overhead Reduction Applied to AES](https://doi.org/10.46586/tches.v2026.i4.208-236) by **Daniel Lammers, Lukas Weber, and Amir Moradi**. The artifact is licensed under [GNU GPLv3](LICENSE). It provides the following contents:
 
 | Subfolder | Contents |
 | --- | --- |
@@ -17,7 +17,7 @@ Due to the nature of the CCHPC1.1 scheme, layers are executed/evaluated in conse
 
 ## Tool-assisted Evaluation
 
-The subfolder contains the config files for [PROLEAD](https://github.com/ChairImpSec/PROLEAD) \[MM22\] to evaluate the gadgets and the S-box under the RR probing model and the corresponding results.
+The [tool-assisted evaluation](<tool-assisted evaluation/>) folder contains synthesized netlists, [PROLEAD](https://github.com/ChairImpSec/PROLEAD) \[MM22\] configurations, and results for the gadgets and looped AES S-box under the RR probing model. See its [README](<tool-assisted evaluation/README.md>) for the evaluated designs and usage.
 
 ## $\mathsf{Unrail}$
 

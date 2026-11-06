@@ -1,0 +1,138 @@
+{
+    "performance": {
+        "max_number_of_threads": "half",
+        "minimize_probing_sets": "trivial",
+        "number_of_entries_in_report": 3,
+        "compact_distributions": true
+    },
+    "simulation": {
+        "groups": [
+            "23'b$$$$$$$$$$$$$$$$$$$$$$$",
+            "23'b$$$$$$$$$$$$$$$00000000"
+        ],
+        "always_random_inputs": [
+            "r_SR[83:0]"
+        ],
+        "output_shares": [
+            "{z[21],z[18],z[15],z[12],z[9],z[6],z[3],z[0]}",
+            "{z[22],z[19],z[16],z[13],z[10],z[7],z[4],z[1]}",
+            "{z[23],z[20],z[17],z[14],z[11],z[8],z[5],z[2]}"
+        ],
+        "expected_output": [
+            "8'b$$$$$$$$",
+            "8'b11111011"
+        ],
+        "number_of_clock_cycles": 5,
+        "input_sequence": [
+            {
+                "signals": [
+                    {
+                        "name": "rst",
+                        "value": "1'b1"
+                    },
+                    {
+                        "name": "{a[0],a[3],a[6],a[9],a[12],a[15],a[18],a[21]}",
+                        "value": "8'b00000000"
+                    },
+                    {
+                        "name": "{a[1],a[4],a[7],a[10],a[13],a[16],a[19],a[22]}",
+                        "value": "8'b00000000"
+                    },
+                    {
+                        "name": "{a[2],a[5],a[8],a[11],a[14],a[17],a[20],a[23]}",
+                        "value": "8'b00000000"
+                    },
+                    {
+                        "name": "r_duality0[29:0]",
+                        "value": "30'b000000000000000000000000000000"
+                    },
+                    {
+                        "name": "r_duality1[29:0]",
+                        "value": "30'b000000000000000000000000000000"
+                    }
+                ]
+            },
+            {
+                "signals": [
+                    {
+                        "name": "rst",
+                        "value": "1'b1"
+                    }
+                ]
+            },
+            {
+                "signals": [
+                    {
+                        "name": "rst",
+                        "value": "1'b0"
+                    },
+                    {
+                        "name": "{a[0],a[3],a[6],a[9],a[12],a[15],a[18],a[21]}",
+                        "value": "group_in0[7:0]"
+                    },
+                    {
+                        "name": "{a[1],a[4],a[7],a[10],a[13],a[16],a[19],a[22]}",
+                        "value": "group_in1[7:0]"
+                    },
+                    {
+                        "name": "{a[2],a[5],a[8],a[11],a[14],a[17],a[20],a[23]}",
+                        "value": "group_in2[7:0]"
+                    },
+                    {
+                        "name": "r_duality0[29:0]",
+                        "value": "30'b000000000000000000000000000000"
+                    },
+                    {
+                        "name": "r_duality1[29:0]",
+                        "value": "30'b000000000000000000000000000000"
+                    }
+                ]
+            },
+            {
+                "signals": [
+                    {
+                        "name": "{r_duality0[29],r_duality0[27],r_duality0[25],r_duality0[23],r_duality0[21],r_duality0[19],r_duality0[17],r_duality0[15],r_duality0[13],r_duality0[11],r_duality0[9],r_duality0[7],r_duality0[5],r_duality0[3],r_duality0[1]}",
+                        "value": "group_in0[22:8]"
+                    },
+                    {
+                        "name": "{r_duality0[28],r_duality0[26],r_duality0[24],r_duality0[22],r_duality0[20],r_duality0[18],r_duality0[16],r_duality0[14],r_duality0[12],r_duality0[10],r_duality0[8],r_duality0[6],r_duality0[4],r_duality0[2],r_duality0[0]}",
+                        "value": "~group_in0[22:8]"
+                    },
+                    {
+                        "name": "r_duality1[29:0]",
+                        "value": "30'b000000000000000000000000000000"
+                    }
+                ]
+            },
+            {
+                "signals": [
+                    {
+                        "name": "r_duality0[29:0]",
+                        "value": "30'b000000000000000000000000000000"
+                    },
+                    {
+                        "name": "{r_duality1[29],r_duality1[27],r_duality1[25],r_duality1[23],r_duality1[21],r_duality1[19],r_duality1[17],r_duality1[15],r_duality1[13],r_duality1[11],r_duality1[9],r_duality1[7],r_duality1[5],r_duality1[3],r_duality1[1]}",
+                        "value": "group_in1[22:8]"
+                    },
+                    {
+                        "name": "{r_duality1[28],r_duality1[26],r_duality1[24],r_duality1[22],r_duality1[20],r_duality1[18],r_duality1[16],r_duality1[14],r_duality1[12],r_duality1[10],r_duality1[8],r_duality1[6],r_duality1[4],r_duality1[2],r_duality1[0]}",
+                        "value": "~group_in1[22:8]"
+                    }
+                ]
+            }
+        ],
+        "number_of_simulations": 100000000,
+        "number_of_simulations_per_step": 64,
+        "waveform_simulation": false,
+        "number_of_simulations_per_write": 64
+    },
+    "hardware": {
+        "clock_signal_name": "clk"
+    },
+    "side_channel_analysis": {
+        "order": 2,
+        "relaxed_model": true,
+        "transitional_leakage": true,
+        "clock_cycles": ["2-5"]
+    }
+}
